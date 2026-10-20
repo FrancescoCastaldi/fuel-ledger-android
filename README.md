@@ -50,6 +50,18 @@ The interface and repository documentation are in English. Units remain kilomete
 
 Signed APKs are published on [GitHub Releases](https://github.com/FrancescoCastaldi/fuel-ledger-android/releases), not on Google Play. See [installing and updating](docs/install.md) for automatic updates with Obtainium, the signing certificate fingerprint and how to move from a debug build.
 
+## Encrypted source
+
+The source code on GitHub is encrypted with [transcrypt](https://github.com/elasticdog/transcrypt) 2.3.2 (AES-256-CBC). `app/`, `tools/`, `build.gradle.kts`, `settings.gradle.kts` and `gradle.properties` are stored as ciphertext; documentation, screenshots, the Gradle wrapper and `build_apk.bat` stay readable. A configured clone encrypts on commit and decrypts on checkout, so local files are always plain text.
+
+To unlock a fresh clone, run this from Git Bash in the repository root. The password is `FUEL_LEDGER_TRANSCRYPT_PASSWORD` in the maintainer's private `.env`:
+
+```bash
+bash /c/path/to/transcrypt -c aes-256-cbc -p "$FUEL_LEDGER_TRANSCRYPT_PASSWORD" -y
+```
+
+On Windows, pass the script as a `/c/...` path: transcrypt 2.3.2 stops silently when given a `C:/...` path. A configured clone keeps a copy of the script in `.git/crypt/transcrypt` and the password in `.git/config`. Without the password the code cannot be recovered from GitHub.
+
 ## Build
 
 Requires Android SDK 34, JDK 17 or 21, and a network connection for the first dependency download. The Gradle 8.7 wrapper is included.

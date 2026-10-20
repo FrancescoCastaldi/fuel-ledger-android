@@ -17,4 +17,6 @@ Use JDK 17 or 21 and Android SDK 34. The wrapper uses Gradle 8.7.
 
 In the original local workspace, the portable JDK is at `03_Sviluppo_Software/Tool_e_Config/tools/jdk-21/jdk-21` and the SDK is at `Tool_e_Config/tools/android-sdk`. Prefer `JAVA_HOME`, `ANDROID_HOME` or an ignored `local.properties` over machine-specific paths in committed files.
 
+Source files under `app/`, `tools/` and the Gradle build scripts are encrypted on GitHub with transcrypt (see README, "Encrypted source"). Before committing in a new clone, check `git config --get transcrypt.cipher` returns `aes-256-cbc`; the `crypt` filter is required, so commits fail instead of leaking plain text when it is missing. Never print or commit the password.
+
 See [codemap.md](codemap.md) for entry points and responsibilities.
