@@ -20,6 +20,8 @@ The demo uses actual Compose test frames and synthetic records. The needle shows
 
 - **Trip computer:** average consumption in L/100 km and km/L, rolling odometer, cost per kilometer, monthly and yearly spending.
 - **Fill-ups:** date, odometer, liters, unit price and total. Enter any two monetary/volume values to calculate the third. Odometer validation checks neighboring fill-ups.
+- **Receipt scan:** take a photo or pick one from the gallery to fill in liters, price, total and date. Text recognition runs on the phone with the bundled ML Kit model, and the photo is deleted after reading. The odometer is always entered by hand.
+- **Home screen widget:** average consumption, odometer, the most urgent reminder and a fill-up shortcut that opens the form directly. It follows the phone's light or dark theme.
 - **Full-to-full consumption:** partial fill-ups between two full tanks count toward the same segment. A distance-weighted average avoids misleading results.
 - **Expenses:** maintenance, tires, tolls, parking and other costs, with category filters and swipe-to-delete with undo.
 - **Reminders:** road tax, insurance, inspection and servicing, by date or kilometer threshold. A daily local notification warns you in advance.
@@ -40,6 +42,14 @@ The interface and repository documentation are in English. Units remain kilomete
 |:---:|:---:|
 | ![Charts](docs/screenshots/charts_night.png) | ![Fill-up form](docs/screenshots/refuel_form_night.png) |
 
+| Night widget | Day widget |
+|:---:|:---:|
+| ![Night widget](docs/screenshots/widget_wide_night.png) | ![Day widget](docs/screenshots/widget_wide_day.png) |
+
+## Install
+
+Signed APKs are published on [GitHub Releases](https://github.com/FrancescoCastaldi/fuel-ledger-android/releases), not on Google Play. See [installing and updating](docs/install.md) for automatic updates with Obtainium, the signing certificate fingerprint and how to move from a debug build.
+
 ## Build
 
 Requires Android SDK 34, JDK 17 or 21, and a network connection for the first dependency download. The Gradle 8.7 wrapper is included.
@@ -55,13 +65,13 @@ Requires Android SDK 34, JDK 17 or 21, and a network connection for the first de
 .\gradlew.bat lintDebug
 ```
 
-On Windows, `build_apk.bat` runs tests, builds the release APK and copies it to `FuelLedger-v0.2.0.apk` in the project root. It can auto-detect the local portable toolchain, but standard environment variables work anywhere.
+On Windows, `build_apk.bat` runs tests, builds the release APK and copies it to `FuelLedger-v0.3.0.apk` in the project root. It can auto-detect the local portable toolchain, but standard environment variables work anywhere.
 
-Without `keystore.properties`, release builds use the local Android debug key. This is suitable for personal testing, not store distribution. For a stable private signing identity, create an ignored `keystore.properties` file containing `storeFile`, `storePassword`, `keyAlias` and `keyPassword`. Keep the keystore and its passwords outside Git.
+Without `keystore.properties`, release builds use the local Android debug key. This is suitable for personal testing, not distribution. Published releases use a personal key: the ignored `keystore.properties` file contains `storeFile` and `keyAlias`, and the password comes from the `FUEL_LEDGER_KEY_PASSWORD` environment variable, which `build_apk.bat` asks for with hidden input. `storePassword` and `keyPassword` entries are still read if present. Keep the keystore and its password outside Git.
 
 ## Tests and demo generation
 
-The JVM suite covers consumption, costs, reminders, form calculations, odometer validation, CSV round trips, Room transactions and English formatting. Robolectric renders review screenshots to `app/build/screenshots/`; these are visual review aids, not pixel-diff assertions.
+The JVM suite covers consumption, costs, reminders, form calculations, odometer validation, receipt parsing, the widget summary, CSV round trips, Room transactions and English formatting. Robolectric renders review screenshots of the app and the widget to `app/build/screenshots/`; these are visual review aids, not pixel-diff assertions.
 
 `ScreenshotTest.dashboardDemoFrames` also writes 48 dashboard startup frames to `app/build/demo-frames/`. To regenerate the README GIF with FFmpeg:
 
@@ -72,13 +82,13 @@ ffmpeg -y -framerate 15.625 -i app/build/demo-frames/frame_%03d.png -filter_comp
 
 ## Privacy and backups
 
-Room stores data locally. Android automatic cloud backup is disabled, and the app does not request internet access. CSV export is manual; choosing a cloud document provider can upload that file through the provider, not through Fuel Ledger. Import replaces all current records after confirmation.
+Room stores data locally. Android automatic cloud backup is disabled, and the app does not request internet access: the manifest removes the network permissions that ML Kit declares for optional telemetry. Receipt photos go to the app cache through the system camera or photo picker, so no camera or storage permission is needed. CSV export is manual; choosing a cloud document provider can upload that file through the provider, not through Fuel Ledger. Import replaces all current records after confirmation.
 
 Fuel Ledger has a new application ID. It installs separately from the earlier Italian prototype and does not automatically migrate its data. Its CSV format starts with `#fuel-ledger,1` and uses English enum names; prototype CSV files are not directly compatible.
 
 ## Project
 
-Kotlin 2.0, Compose Material 3, Room 2.6, Navigation Compose, WorkManager and AndroidX Core SplashScreen. Minimum Android 8.0 (API 26), target API 34.
+Kotlin 2.0, Compose Material 3, Room 2.6, Navigation Compose, WorkManager, Jetpack Glance, ML Kit Text Recognition (bundled) and AndroidX Core SplashScreen. Minimum Android 8.0 (API 26), target API 34. The APK contains ARM native code only (`arm64-v8a`, `armeabi-v7a`).
 
 - [Architecture map](codemap.md)
 - [Changelog](CHANGELOG.md)

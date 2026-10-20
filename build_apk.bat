@@ -2,7 +2,7 @@
 setlocal enabledelayedexpansion
 
 REM Keep aligned with versionName in app\build.gradle.kts
-set "VERSION=0.2.0"
+set "VERSION=0.3.0"
 
 cd /d "%~dp0"
 set "TOOLS=%~dp0..\..\Tool_e_Config\tools"
@@ -17,6 +17,14 @@ if defined JAVA_HOME set "PATH=%JAVA_HOME%\bin;%PATH%"
 echo ========================================================
 echo   FUEL LEDGER v%VERSION%: tests and release APK
 echo ========================================================
+
+if exist "keystore.properties" if not defined FUEL_LEDGER_KEY_PASSWORD (
+    for /f "usebackq delims=" %%P in (`powershell -NoProfile -Command "$s = Read-Host 'Signing key password' -AsSecureString; [Runtime.InteropServices.Marshal]::PtrToStringBSTR([Runtime.InteropServices.Marshal]::SecureStringToBSTR($s))"`) do set "FUEL_LEDGER_KEY_PASSWORD=%%P"
+)
+if exist "keystore.properties" if not defined FUEL_LEDGER_KEY_PASSWORD (
+    echo [ERROR] keystore.properties found but no signing password was entered.
+    exit /b 1
+)
 
 echo [1/3] Running unit tests...
 call gradlew.bat testDebugUnitTest --console=plain
