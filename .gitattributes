@@ -1,0 +1,14 @@
+* text=auto eol=lf
+*.bat text eol=crlf
+*.png binary
+*.gif binary
+*.ttf binary
+*.jar binary
+
+# Source code is encrypted on GitHub with transcrypt (see README, "Encrypted source").
+# Keep these lines last so they override the binary rules above.
+app/** filter=crypt diff=crypt merge=crypt
+tools/** filter=crypt diff=crypt merge=crypt
+build.gradle.kts filter=crypt diff=crypt merge=crypt
+settings.gradle.kts filter=crypt diff=crypt merge=crypt
+gradle.properties filter=crypt diff=crypt merge=crypt

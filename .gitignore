@@ -1,0 +1,42 @@
+# Secrets & signing
+*.keystore
+*.jks
+*.p12
+*.pfx
+keystore.properties
+.env
+.env.*
+!.env.example
+
+# Android / Gradle build
+*.iml
+.gradle/
+local.properties
+.idea/
+**/build/
+/captures
+.externalNativeBuild
+.cxx
+.kotlin/
+*.hprof
+
+# Binaries (only the versioned release APK in the root is kept locally, never committed)
+*.apk
+*.aab
+
+# Local data
+*.db
+*.sqlite
+
+# OS & IDE
+.DS_Store
+Thumbs.db
+desktop.ini
+.worktrees/
+
+# Documentation is always versioned
+!CHANGELOG.md
+!README.md
+!AGENTS.md
+!codemap.md
+!docs/
