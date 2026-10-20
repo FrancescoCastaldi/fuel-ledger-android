@@ -18,6 +18,11 @@ echo ========================================================
 echo   FUEL LEDGER v%VERSION%: tests and release APK
 echo ========================================================
 
+REM The signing password lives in the workspace .env (D:\Actual\.env); without it, ask with hidden input.
+set "WORKSPACE_ENV=%~dp0..\..\..\.env"
+if exist "keystore.properties" if not defined FUEL_LEDGER_KEY_PASSWORD if exist "%WORKSPACE_ENV%" (
+    for /f "usebackq tokens=1,* delims==" %%A in (`findstr /b /c:"FUEL_LEDGER_KEY_PASSWORD=" "%WORKSPACE_ENV%"`) do set "FUEL_LEDGER_KEY_PASSWORD=%%B"
+)
 if exist "keystore.properties" if not defined FUEL_LEDGER_KEY_PASSWORD (
     for /f "usebackq delims=" %%P in (`powershell -NoProfile -Command "$s = Read-Host 'Signing key password' -AsSecureString; [Runtime.InteropServices.Marshal]::PtrToStringBSTR([Runtime.InteropServices.Marshal]::SecureStringToBSTR($s))"`) do set "FUEL_LEDGER_KEY_PASSWORD=%%P"
 )
