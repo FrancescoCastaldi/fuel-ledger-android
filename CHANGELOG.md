@@ -6,6 +6,10 @@ The format follows [Keep a Changelog 1.1.0](https://keepachangelog.com/en/1.1.0/
 
 ## [Unreleased]
 
+### Security
+
+- Encrypted the source code on GitHub with transcrypt (AES-256-CBC), rewriting the existing history and tags. Documentation and release assets stay readable.
+
 ## [0.3.0] - 2026-10-20
 
 ### Added
