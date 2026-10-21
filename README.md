@@ -6,7 +6,7 @@
 
 An offline Android car logbook for fuel, running costs and maintenance reminders. Built in Kotlin and Jetpack Compose, with an amber instrument cluster that follows your phone's light or dark theme.
 
-No account. No analytics. No network permission. Your records stay on your phone.
+No account. No analytics. The only time the app goes online is when you tap **Check for updates**. Your records stay on your phone.
 
 **[Download the latest APK](https://francescocastaldi.github.io/fuel-ledger-android/)** from the project page, or see [installing and updating](docs/install.md).
 
@@ -31,9 +31,11 @@ The demo uses actual Compose test frames and synthetic records. The needle shows
 - **Renewal:** move a reminder forward by its preset interval. Inspection defaults to 24 months; other types default to 12 months. Check the rules that apply to your vehicle.
 - **Charts:** monthly fuel/other spending and consumption per full tank, with tap-to-inspect values.
 - **Multiple vehicles** and a single-file **CSV backup**, selected through Android's document picker.
-- **Brand motion:** cold-start needle rise, dashboard ignition sweep and rolling odometer digits. The splash skips motion when system animations are disabled.
+- **Update from the app:** Settings has a **Check for updates** button. It compares the installed version with the latest GitHub release and, when there is a newer one, becomes **Update app** and opens the APK download.
+- **Motion:** cold-start needle rise with the ledger lines drawing in, dashboard ignition sweep, counting digits and rolling odometer, charts that grow and draw themselves, lists that cascade in and collapse when swiped, and transitions that tell tab switches from deeper screens. All of it stops when system animations are disabled.
+- **English and Italian:** the app follows the phone's language, with numbers and dates to match. On Android 13 and later you can also pick the language per app in the system settings.
 
-The interface and repository documentation are in English. Units remain kilometers, liters and euros.
+Repository documentation is in English. Units remain kilometers, liters and euros.
 
 ## Screenshots
 
@@ -97,7 +99,7 @@ ffmpeg -y -framerate 15.625 -i app/build/demo-frames/frame_%03d.png -filter_comp
 
 ## Privacy and backups
 
-Room stores data locally. Android automatic cloud backup is disabled, and the app does not request internet access: the manifest removes the network permissions that ML Kit declares for optional telemetry. Receipt photos go to the app cache through the system camera or photo picker, so no camera or storage permission is needed. CSV export is manual; choosing a cloud document provider can upload that file through the provider, not through Fuel Ledger. Import replaces all current records after confirmation.
+Room stores data locally. Android automatic cloud backup is disabled, and the app goes online only when you tap **Check for updates** in Settings: one request to the GitHub API for the latest release, with no data about you or your records. The manifest removes the network-state permission that ML Kit declares for optional telemetry. Receipt photos go to the app cache through the system camera or photo picker, so no camera or storage permission is needed. CSV export is manual; choosing a cloud document provider can upload that file through the provider, not through Fuel Ledger. Import replaces all current records after confirmation.
 
 Fuel Ledger has a new application ID. It installs separately from the earlier Italian prototype and does not automatically migrate its data. Its CSV format starts with `#fuel-ledger,1` and uses English enum names; prototype CSV files are not directly compatible.
 
