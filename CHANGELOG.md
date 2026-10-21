@@ -6,6 +6,16 @@ The format follows [Keep a Changelog 1.1.0](https://keepachangelog.com/en/1.1.0/
 
 ## [Unreleased]
 
+### Added
+
+- Optional "Range before fill-up" field. With it, consumption is estimated for partial fill-ups too, from the change in displayed range between two readings.
+- Statistics card "Estimated from range", with a calibration against full-to-full segments that shows how far the board computer is off.
+- The CSV backup carries the range in a new last column. Files from earlier versions still import, and older apps ignore the column.
+
+### Changed
+
+- The database moves to schema version 2 (new nullable `rangeBeforeKm` column). Existing data is kept. Room schemas are now exported to `app/schemas/` and a test covers the 1 to 2 migration.
+
 ### Security
 
 - Encrypted the source code on GitHub with transcrypt (AES-256-CBC), rewriting the existing history and tags. Documentation and release assets stay readable.
