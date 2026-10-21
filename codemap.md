@@ -26,6 +26,7 @@ Paths below are relative to `app/src/main/java/com/fcastaldi/fuelledger/`.
 | `data/Daos.kt`, `data/AppDatabase.kt` | Queries, database and date converters |
 | `data/CarRepository.kt` | Selected vehicle, flows, CRUD and transactional import |
 | `domain/ConsumptionCalculator.kt` | Full-to-full consumption and weighted averages |
+| `domain/RangeConsumptionCalculator.kt` | Consumption estimate from the range before each refuel, with board computer calibration |
 | `domain/CostCalculator.kt` | Cost per kilometer, period totals and monthly totals |
 | `domain/DeadlineEvaluator.kt` | Reminder status, renewal and urgency order |
 | `domain/RefuelMath.kt` | Missing fill-up value and odometer validation |
@@ -49,6 +50,8 @@ Under `app/src/test/java/com/fcastaldi/fuelledger/`:
 
 - `domain/*Test.kt`: calculations, validation and CSV.
 - `data/CarRepositoryTest.kt`: in-memory Room, selection, cascade deletion and import.
+- `data/AppDatabaseMigrationTest.kt`: builds a version 1 database from `app/schemas/` and migrates it.
+- `domain/RangeConsumptionCalculatorTest.kt`: range-based estimates and calibration.
 - `ui/FmtTest.kt`: English formatting and reminder phrases.
 - `ui/ScreenshotTest.kt`: review screenshots, splash completion and dashboard animation frames.
 - `domain/ReceiptParserTest.kt`: receipt layouts, cross-checks, totals and dates.
@@ -63,4 +66,5 @@ Under `app/src/test/java/com/fcastaldi/fuelledger/`:
 - `docs/install.md`: GitHub Releases, Obtainium, signing fingerprint and release steps.
 - `docs/releases/`: release notes used for each GitHub release.
 - `tools/outline_brand.py`: reproducible wordmark font outlining.
+- `app/schemas/`: exported Room schemas, one JSON per database version.
 - `app/src/main/res/`: launcher/notification vectors, themes and bundled OFL fonts.

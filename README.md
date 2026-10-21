@@ -23,6 +23,7 @@ The demo uses actual Compose test frames and synthetic records. The needle shows
 - **Receipt scan:** take a photo or pick one from the gallery to fill in liters, price, total and date. Text recognition runs on the phone with the bundled ML Kit model, and the photo is deleted after reading. The odometer is always entered by hand.
 - **Home screen widget:** average consumption, odometer, the most urgent reminder and a fill-up shortcut that opens the form directly. It follows the phone's light or dark theme.
 - **Full-to-full consumption:** partial fill-ups between two full tanks count toward the same segment. A distance-weighted average avoids misleading results.
+- **Range-based estimate:** note the range shown before refueling and partial fill-ups get a consumption estimate too. A calibration against full-to-full segments corrects a board computer that reads optimistic.
 - **Expenses:** maintenance, tires, tolls, parking and other costs, with category filters and swipe-to-delete with undo.
 - **Reminders:** road tax, insurance, inspection and servicing, by date or kilometer threshold. A daily local notification warns you in advance.
 - **Renewal:** move a reminder forward by its preset interval. Inspection defaults to 24 months; other types default to 12 months. Check the rules that apply to your vehicle.
