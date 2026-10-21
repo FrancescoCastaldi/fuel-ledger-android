@@ -28,7 +28,7 @@ The Italian `DiarioAuto` prototype uses a different CSV format and cannot be imp
 
 ## Update from the app
 
-From 0.5.0 on, **Settings > Updates > Check for updates** asks GitHub for the latest release. If it is newer than the installed version the row becomes **Update app**: tap it to download the APK in the browser, then open the file to install it over the current app. Your records are kept, because the signing key is the same. This is the only network request the app makes, and it happens only when you tap the row.
+From 0.5.0 on, **Settings > Updates > Check for updates** asks GitHub for the latest release. If it is newer than the installed version the row becomes **Update app**: tap it to download the APK in the browser, then open the file to install it over the current app. Your records are kept, because the signing key is the same. Besides the optional [cloud sync](cloud-sync.md), this is the only network request the app makes, and it happens only when you tap the row.
 
 ## Install with Obtainium
 
