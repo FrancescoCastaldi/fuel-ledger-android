@@ -6,6 +6,16 @@ The format follows [Keep a Changelog 1.1.0](https://keepachangelog.com/en/1.1.0/
 
 ## [Unreleased]
 
+### Added
+
+- Optional cloud sync with your own Supabase project. Sign in with Google in the browser (code flow with a proof key, no Google Play Services) and tap **Migrate and sync**: vehicles, fill-ups, expenses and reminders are merged both ways, the newest change wins and deletions propagate. Nothing syncs in the background. The tables and their row level security are in `docs/supabase/schema.sql`, the setup in `docs/cloud-sync.md`. The section stays switched off until `supabase.properties` (ignored by Git) holds the project URL and anon key at build time.
+- Tests: the sync engine with two phones and a cloud that drops stale writes, the cloud codec, the sign-in proof key and session parsing, and the version 3 migration.
+
+### Changed
+
+- The database moves to schema version 3: every record gets a UUID and a last-change time, and a table of pending deletions is added. Existing data is kept.
+- Deleting a record now leaves a tombstone until the next sync, and the CSV import tombstones the records it replaces.
+
 ## [0.5.0] - 2026-10-21
 
 ### Added

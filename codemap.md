@@ -37,6 +37,10 @@ Paths below are relative to `app/src/main/java/com/fcastaldi/fuelledger/`.
 | `widget/WidgetSummary.kt` | Formatted widget data for the selected vehicle |
 | `ui/Fmt.kt`, `ui/Icons.kt` | Language-aware formatting and type-to-icon mapping |
 | `ui/UiText.kt`, `ui/Labels.kt` | A string resource with arguments resolved late, and the resource ids of enum labels |
+| `sync/SyncEngine.kt` | Two-way merge of the local database with the cloud by uuid, newest `updatedAt` wins |
+| `sync/CloudApi.kt`, `sync/CloudCodec.kt` | The cloud as the engine sees it, and the conversion of records to and from cloud rows |
+| `sync/SupabaseApi.kt`, `sync/SupabaseAuth.kt`, `sync/Http.kt`, `sync/Pkce.kt` | REST client, Google sign-in through the browser with a proof key, session storage |
+| `sync/CloudService.kt`, `ui/settings/CloudViewModel.kt` | Sign-in state, sync in the app scope, and the Settings view of it |
 | `update/ReleaseVersion.kt`, `update/GitHubReleases.kt` | Version comparison and the latest-release request, made only when the user taps Check for updates |
 | `ui/settings/UpdateViewModel.kt` | State of the update row in Settings |
 | `ui/Motion.kt` | Shared easing and timing, staggered entrance, count-up and the entrance window of lists |
@@ -58,6 +62,7 @@ Under `app/src/test/java/com/fcastaldi/fuelledger/`:
 - `domain/RangeConsumptionCalculatorTest.kt`: range-based estimates and calibration.
 - `ui/FmtTest.kt`: English and Italian formatting and reminder phrases.
 - `ui/StringResourcesTest.kt`, `ui/ItalianLocalizationTest.kt`: parity of `values/` and `values-it/`, and Italian text under Robolectric.
+- `sync/SyncEngineTest.kt`, `sync/CloudCodecTest.kt`, `sync/AuthTest.kt`: sync between two phones and a fake cloud, record conversion, proof key and session parsing.
 - `update/UpdateTest.kt`: version comparison, release JSON parsing and the update state machine.
 - `ui/MotionTest.kt`, `ui/SwipeToDeleteTest.kt`: stagger timing and swipe-to-delete.
 - `ui/ScreenshotTest.kt`: review screenshots, splash completion and dashboard animation frames.
@@ -72,6 +77,7 @@ Under `app/src/test/java/com/fcastaldi/fuelledger/`:
 - `build_apk.bat`: the whole release step. Finds the signing password, runs the test gate, builds the versioned APK in `dist/` (removing older builds), then verifies it (versions, single APK, package, permissions, languages, signature against the fingerprint in `docs/install.md`). The console shows the RESULT; detail goes to the ignored `build_apk.log`. `build_apk.bat verify` only re-checks the APK in `dist/`.
 - `dist/`: the latest signed APK only. Ignored by Git, never committed.
 - `docs/index.html`: GitHub Pages site (source: `main`, folder `/docs`). Its download button reads the latest release from the GitHub API, so it needs no edit per release. `docs/.nojekyll` turns off Jekyll processing.
+- `docs/cloud-sync.md`, `docs/supabase/schema.sql`: setup of the optional Supabase sync and its tables with row level security.
 - `docs/install.md`: GitHub Releases, Obtainium, signing fingerprint and release steps.
 - `docs/releases/`: release notes used for each GitHub release.
 - `tools/outline_brand.py`: reproducible wordmark font outlining.
