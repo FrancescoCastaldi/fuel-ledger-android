@@ -80,7 +80,7 @@ Requires Android SDK 34, JDK 17 or 21, and a network connection for the first de
 .\gradlew.bat lintDebug
 ```
 
-On Windows, `build_apk.bat` runs tests, builds the release APK and copies it to `FuelLedger-v0.3.0.apk` in the project root. It can auto-detect the local portable toolchain, but standard environment variables work anywhere.
+On Windows, `build_apk.bat` runs tests, builds the release APK and copies it to `dist/FuelLedger-vX.Y.Z.apk`, deleting older builds there. It can auto-detect the local portable toolchain, but standard environment variables work anywhere.
 
 Without `keystore.properties`, release builds use the local Android debug key. This is suitable for personal testing, not distribution. Published releases use a personal key: the ignored `keystore.properties` file contains `storeFile` and `keyAlias`, and the password comes from the `FUEL_LEDGER_KEY_PASSWORD` environment variable, which `build_apk.bat` reads from the private workspace `.env` or asks for with hidden input. `storePassword` and `keyPassword` entries are still read if present. Keep the keystore and its password outside Git.
 
