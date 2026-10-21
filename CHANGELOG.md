@@ -6,6 +6,8 @@ The format follows [Keep a Changelog 1.1.0](https://keepachangelog.com/en/1.1.0/
 
 ## [Unreleased]
 
+## [0.6.0] - 2026-10-21
+
 ### Added
 
 - Optional cloud sync with your own Supabase project. Sign in with Google in the browser (code flow with a proof key, no Google Play Services) and tap **Migrate and sync**: vehicles, fill-ups, expenses and reminders are merged both ways, the newest change wins and deletions propagate. Nothing syncs in the background. The tables and their row level security are in `docs/supabase/schema.sql`, the setup in `docs/cloud-sync.md`. The section stays switched off until `supabase.properties` (ignored by Git) holds the project URL and anon key at build time.
@@ -101,7 +103,8 @@ The format follows [Keep a Changelog 1.1.0](https://keepachangelog.com/en/1.1.0/
 
 Version 0.1.0 was a local prototype and was not published.
 
-[Unreleased]: https://github.com/FrancescoCastaldi/fuel-ledger-android/compare/v0.5.0...HEAD
+[Unreleased]: https://github.com/FrancescoCastaldi/fuel-ledger-android/compare/v0.6.0...HEAD
+[0.6.0]: https://github.com/FrancescoCastaldi/fuel-ledger-android/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/FrancescoCastaldi/fuel-ledger-android/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/FrancescoCastaldi/fuel-ledger-android/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/FrancescoCastaldi/fuel-ledger-android/compare/v0.2.0...v0.3.0
