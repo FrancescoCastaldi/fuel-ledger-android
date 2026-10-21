@@ -6,6 +6,8 @@ The format follows [Keep a Changelog 1.1.0](https://keepachangelog.com/en/1.1.0/
 
 ## [Unreleased]
 
+## [0.5.0] - 2026-10-21
+
 ### Added
 
 - Italian translation of the whole app: screens, form errors, notifications and the home screen widget. The app follows the phone's language (Italian or English); on Android 13 and later it also appears in the system's per-app language settings. Numbers and dates follow the language (1.234,5 and 21/10/2026 in Italian).
@@ -89,7 +91,8 @@ The format follows [Keep a Changelog 1.1.0](https://keepachangelog.com/en/1.1.0/
 
 Version 0.1.0 was a local prototype and was not published.
 
-[Unreleased]: https://github.com/FrancescoCastaldi/fuel-ledger-android/compare/v0.4.0...HEAD
+[Unreleased]: https://github.com/FrancescoCastaldi/fuel-ledger-android/compare/v0.5.0...HEAD
+[0.5.0]: https://github.com/FrancescoCastaldi/fuel-ledger-android/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/FrancescoCastaldi/fuel-ledger-android/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/FrancescoCastaldi/fuel-ledger-android/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/FrancescoCastaldi/fuel-ledger-android/releases/tag/v0.2.0

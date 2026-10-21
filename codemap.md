@@ -69,7 +69,7 @@ Under `app/src/test/java/com/fcastaldi/fuelledger/`:
 - `docs/brand/`: static and animated SVG wordmarks, palette and usage notes.
 - `docs/screenshots/`: reviewed English screenshots.
 - `docs/demo/dashboard.gif`: startup sequence rendered from Compose tests.
-- `build_apk.bat`: signing password prompt, test gate and versioned release APK in `dist/`, removing older builds there.
+- `build_apk.bat`: the whole release step. Finds the signing password, runs the test gate, builds the versioned APK in `dist/` (removing older builds), then verifies it (versions, single APK, package, permissions, languages, signature against the fingerprint in `docs/install.md`). The console shows the RESULT; detail goes to the ignored `build_apk.log`. `build_apk.bat verify` only re-checks the APK in `dist/`.
 - `dist/`: the latest signed APK only. Ignored by Git, never committed.
 - `docs/index.html`: GitHub Pages site (source: `main`, folder `/docs`). Its download button reads the latest release from the GitHub API, so it needs no edit per release. `docs/.nojekyll` turns off Jekyll processing.
 - `docs/install.md`: GitHub Releases, Obtainium, signing fingerprint and release steps.
