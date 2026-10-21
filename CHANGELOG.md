@@ -6,6 +6,8 @@ The format follows [Keep a Changelog 1.1.0](https://keepachangelog.com/en/1.1.0/
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-10-21
+
 ### Added
 
 - Optional "Range before fill-up" field. With it, consumption is estimated for partial fill-ups too, from the change in displayed range between two readings.
@@ -72,7 +74,8 @@ The format follows [Keep a Changelog 1.1.0](https://keepachangelog.com/en/1.1.0/
 
 Version 0.1.0 was a local prototype and was not published.
 
-[Unreleased]: https://github.com/FrancescoCastaldi/fuel-ledger-android/compare/v0.3.0...HEAD
+[Unreleased]: https://github.com/FrancescoCastaldi/fuel-ledger-android/compare/v0.4.0...HEAD
+[0.4.0]: https://github.com/FrancescoCastaldi/fuel-ledger-android/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/FrancescoCastaldi/fuel-ledger-android/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/FrancescoCastaldi/fuel-ledger-android/releases/tag/v0.2.0
 [0.1.0]: https://github.com/FrancescoCastaldi/fuel-ledger-android

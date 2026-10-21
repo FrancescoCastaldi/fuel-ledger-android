@@ -13,7 +13,7 @@ SHA-256: 2A:4B:94:09:10:7C:2C:D2:06:1D:BF:82:A1:9C:16:9C:2C:6B:2F:AE:38:68:76:FD
 To check a downloaded APK on a computer with the Android build tools:
 
 ```powershell
-apksigner verify --print-certs FuelLedger-v0.3.0.apk
+apksigner verify --print-certs FuelLedger-vX.Y.Z.apk
 ```
 
 ## Coming from a local or debug build
@@ -30,7 +30,7 @@ The Italian `DiarioAuto` prototype uses a different CSV format and cannot be imp
 
 1. Install Obtainium from its [GitHub releases](https://github.com/ImranR98/Obtainium/releases) or from F-Droid.
 2. In Obtainium, tap **Add app** and enter `https://github.com/FrancescoCastaldi/fuel-ledger-android`. The repository is public, so no token is needed.
-3. Leave pre-releases off. Obtainium reads the version from the release tag (`v0.3.0`) and downloads `FuelLedger-v0.3.0.apk`.
+3. Leave pre-releases off. Obtainium reads the version from the release tag (`vX.Y.Z`) and downloads `FuelLedger-vX.Y.Z.apk`.
 4. Tap **Install**. Android asks once to allow installs from Obtainium.
 
 Obtainium then checks for new releases in the background and notifies you when one is available.

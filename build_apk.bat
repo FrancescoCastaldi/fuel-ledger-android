@@ -2,7 +2,7 @@
 setlocal enabledelayedexpansion
 
 REM Keep aligned with versionName in app\build.gradle.kts
-set "VERSION=0.3.0"
+set "VERSION=0.4.0"
 
 cd /d "%~dp0"
 set "TOOLS=%~dp0..\..\Tool_e_Config\tools"
@@ -32,14 +32,14 @@ if exist "keystore.properties" if not defined FUEL_LEDGER_KEY_PASSWORD (
 )
 
 echo [1/3] Running unit tests...
-call gradlew.bat testDebugUnitTest --console=plain
+call "%~dp0gradlew.bat" testDebugUnitTest --console=plain
 if errorlevel 1 (
     echo [ERROR] Tests failed. Build stopped.
     exit /b 1
 )
 
 echo [2/3] Building release APK...
-call gradlew.bat assembleRelease --console=plain
+call "%~dp0gradlew.bat" assembleRelease --console=plain
 if errorlevel 1 (
     echo [ERROR] Build failed.
     exit /b 1
