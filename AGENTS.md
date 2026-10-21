@@ -2,12 +2,12 @@
 
 ## Working rules
 
-1. Keep all source, interface text, comments and documentation in English, UTF-8 without BOM.
+1. Keep source, comments and documentation in English, UTF-8 without BOM. Interface text is a string resource: English in `values/` (the default) and Italian in `values-it/`. Never put a user-visible literal in Kotlin; `StringResourcesTest` fails when the two files differ in keys or placeholders. Use `UiText` where there is no composable context (view models, widget, notifications).
 2. Increment `versionName` (SemVer) and `versionCode` for a release. Synchronize `VERSION` in `build_apk.bat` and update `CHANGELOG.md`.
 3. Run `.\gradlew.bat testDebugUnitTest` before delivery. After visual changes, review `app/build/screenshots/` and refresh the committed screenshots and demo if needed.
 4. Do not commit, tag or push without explicit conversation authorization.
-5. Use `DashTheme.colors` and the typography tokens in `ui/theme`. Keep one amber accent, tabular numbers and no gradients.
-6. Keep data offline. Do not add network access, analytics, cloud services or automatic cloud backup. CSV files must be chosen by the user.
+5. Use `DashTheme.colors` and the typography tokens in `ui/theme`. Keep one amber accent, tabular numbers and no gradients. Take animation timing and easing from `ui/Motion.kt`; loops must check `rememberMotionEnabled()` so they stop when the user turns system animations off.
+6. Keep data offline. The only network request is the update check the user starts in Settings (`update/GitHubReleases.kt`, `INTERNET` permission); it sends nothing about the user and never runs in the background. Do not add other network access, analytics, cloud services or automatic cloud backup. CSV files must be chosen by the user.
 7. Never commit signing keys, passwords, `local.properties`, database files or APKs. Release APKs live in `dist/` and only the latest versioned one is kept: `build_apk.bat` deletes older builds from `dist/` after a successful build. Never leave APKs in the repository root.
 8. Never overwrite unrelated user changes. Follow the parent workspace instructions when available.
 

@@ -6,6 +6,21 @@ The format follows [Keep a Changelog 1.1.0](https://keepachangelog.com/en/1.1.0/
 
 ## [Unreleased]
 
+### Added
+
+- Italian translation of the whole app: screens, form errors, notifications and the home screen widget. The app follows the phone's language (Italian or English); on Android 13 and later it also appears in the system's per-app language settings. Numbers and dates follow the language (1.234,5 and 21/10/2026 in Italian).
+- Richer motion. Dashboard: cards enter in sequence, the gauge needle springs with a little overshoot while its digits count up on their own curve, and amounts climb to their values. Charts: bars grow in sequence, the consumption line draws left to right with points popping in, and selecting a point fades the tooltip. Lists: rows cascade in, reorder smoothly and collapse when swiped away before the deletion is reported. Navigation: tabs cross-fade with a slight zoom, other screens slide along the horizontal axis, and the fill-up button pops in and shrinks to an icon while a list is scrolled. Fields fade to amber when the app calculates a value, an overdue badge breathes, and the splash draws the ledger lines before the name appears.
+- **Check for updates** in Settings, which becomes **Update app** when GitHub has a newer release and opens the APK download. It is the app's only network request and runs only when tapped. The row is available in English and Italian.
+- Tests: English and Italian string files must have the same keys and placeholders, Italian text is resolved under Robolectric, and swipe-to-delete and the stagger timing are covered.
+
+### Changed
+
+- All interface text now lives in string resources (`values/` English, `values-it/` Italian). View models hold `UiText` instead of literals, enum labels moved to `ui/Labels.kt`, reminder phrases come from `Fmt.daysPhrase` as `UiText`, and CSV import errors are typed (`CsvFormatException`) so they can be shown in the user's language.
+- Display formatting follows the app language: Italian conventions in Italian, British ones otherwise.
+- Unit tests run with a fixed English locale, so results do not depend on the language of the machine.
+- Only English and Italian library resources are packaged.
+- The app now declares the `INTERNET` permission, for the update check only. `ACCESS_NETWORK_STATE` stays removed.
+
 ## [0.4.0] - 2026-10-21
 
 ### Added

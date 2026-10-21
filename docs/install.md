@@ -26,6 +26,10 @@ Builds made before 0.3.0 was published, including `DiarioAuto` and the local 0.2
 
 The Italian `DiarioAuto` prototype uses a different CSV format and cannot be imported.
 
+## Update from the app
+
+From 0.5.0 on, **Settings > Updates > Check for updates** asks GitHub for the latest release. If it is newer than the installed version the row becomes **Update app**: tap it to download the APK in the browser, then open the file to install it over the current app. Your records are kept, because the signing key is the same. This is the only network request the app makes, and it happens only when you tap the row.
+
 ## Install with Obtainium
 
 1. Install Obtainium from its [GitHub releases](https://github.com/ImranR98/Obtainium/releases) or from F-Droid.

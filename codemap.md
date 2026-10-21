@@ -35,7 +35,11 @@ Paths below are relative to `app/src/main/java/com/fcastaldi/fuelledger/`.
 | `scan/ReceiptScanner.kt` | Camera cache URI, ML Kit recognition and photo cleanup |
 | `widget/FuelLedgerWidget.kt` | Glance widget, receiver, day/night palette and fill-up shortcut |
 | `widget/WidgetSummary.kt` | Formatted widget data for the selected vehicle |
-| `ui/Fmt.kt`, `ui/Icons.kt` | English formatting and type-to-icon mapping |
+| `ui/Fmt.kt`, `ui/Icons.kt` | Language-aware formatting and type-to-icon mapping |
+| `ui/UiText.kt`, `ui/Labels.kt` | A string resource with arguments resolved late, and the resource ids of enum labels |
+| `update/ReleaseVersion.kt`, `update/GitHubReleases.kt` | Version comparison and the latest-release request, made only when the user taps Check for updates |
+| `ui/settings/UpdateViewModel.kt` | State of the update row in Settings |
+| `ui/Motion.kt` | Shared easing and timing, staggered entrance, count-up and the entrance window of lists |
 | `ui/theme/` | Day/night colors, Barlow typography and shapes |
 | `ui/components/` | Gauge, rolling odometer, charts, forms and swipe rows |
 | `ui/components/FuelLedgerSplash.kt` | Vector mark and animated cold-start needle |
@@ -52,7 +56,10 @@ Under `app/src/test/java/com/fcastaldi/fuelledger/`:
 - `data/CarRepositoryTest.kt`: in-memory Room, selection, cascade deletion and import.
 - `data/AppDatabaseMigrationTest.kt`: builds a version 1 database from `app/schemas/` and migrates it.
 - `domain/RangeConsumptionCalculatorTest.kt`: range-based estimates and calibration.
-- `ui/FmtTest.kt`: English formatting and reminder phrases.
+- `ui/FmtTest.kt`: English and Italian formatting and reminder phrases.
+- `ui/StringResourcesTest.kt`, `ui/ItalianLocalizationTest.kt`: parity of `values/` and `values-it/`, and Italian text under Robolectric.
+- `update/UpdateTest.kt`: version comparison, release JSON parsing and the update state machine.
+- `ui/MotionTest.kt`, `ui/SwipeToDeleteTest.kt`: stagger timing and swipe-to-delete.
 - `ui/ScreenshotTest.kt`: review screenshots, splash completion and dashboard animation frames.
 - `domain/ReceiptParserTest.kt`: receipt layouts, cross-checks, totals and dates.
 - `widget/WidgetSummaryTest.kt`, `widget/WidgetRenderTest.kt`: widget data and RemoteViews screenshots.
@@ -69,4 +76,5 @@ Under `app/src/test/java/com/fcastaldi/fuelledger/`:
 - `docs/releases/`: release notes used for each GitHub release.
 - `tools/outline_brand.py`: reproducible wordmark font outlining.
 - `app/schemas/`: exported Room schemas, one JSON per database version.
+- `app/src/main/res/values/strings.xml`, `values-it/strings.xml`: all interface text in English and Italian; `xml/locales_config.xml` lists the languages for Android 13 per-app settings.
 - `app/src/main/res/`: launcher/notification vectors, themes and bundled OFL fonts.
