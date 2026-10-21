@@ -1,6 +1,6 @@
 # Install and update Fuel Ledger
 
-Fuel Ledger is distributed as a signed APK on [GitHub Releases](https://github.com/FrancescoCastaldi/fuel-ledger-android/releases). It is not on Google Play. [Obtainium](https://github.com/ImranR98/Obtainium) can watch the releases and install updates for you.
+Fuel Ledger is distributed as a signed APK on [GitHub Releases](https://github.com/FrancescoCastaldi/fuel-ledger-android/releases) and from the [download page](https://francescocastaldi.github.io/fuel-ledger-android/), whose button always points at the latest one. It is not on Google Play. [Obtainium](https://github.com/ImranR98/Obtainium) can watch the releases and install updates for you.
 
 ## Signing certificate
 
@@ -29,15 +29,11 @@ The Italian `DiarioAuto` prototype uses a different CSV format and cannot be imp
 ## Install with Obtainium
 
 1. Install Obtainium from its [GitHub releases](https://github.com/ImranR98/Obtainium/releases) or from F-Droid.
-2. The repository is private, so Obtainium needs read access:
-   1. On GitHub, open **Settings > Developer settings > Personal access tokens > Fine-grained tokens** and create a token.
-   2. Limit it to `FrancescoCastaldi/fuel-ledger-android`, with **Contents: Read-only** and nothing else. Give it an expiry date you will remember.
-   3. In Obtainium, open **Settings**, find the **GitHub** source section and paste the token into the personal access token field.
-3. In Obtainium, tap **Add app** and enter `https://github.com/FrancescoCastaldi/fuel-ledger-android`.
-4. Leave pre-releases off. Obtainium reads the version from the release tag (`v0.3.0`) and downloads `FuelLedger-v0.3.0.apk`.
-5. Tap **Install**. Android asks once to allow installs from Obtainium.
+2. In Obtainium, tap **Add app** and enter `https://github.com/FrancescoCastaldi/fuel-ledger-android`. The repository is public, so no token is needed.
+3. Leave pre-releases off. Obtainium reads the version from the release tag (`v0.3.0`) and downloads `FuelLedger-v0.3.0.apk`.
+4. Tap **Install**. Android asks once to allow installs from Obtainium.
 
-Obtainium then checks for new releases in the background and notifies you when one is available. If the token expires, update checks fail until you paste a new one.
+Obtainium then checks for new releases in the background and notifies you when one is available.
 
 ## Install by hand
 
@@ -46,12 +42,14 @@ Download `FuelLedger-vX.Y.Z.apk` from the release page on the phone, open it and
 ## Publishing a release (maintainer)
 
 1. Update `versionCode`, `versionName`, `VERSION` in `build_apk.bat` and `CHANGELOG.md`, and write `docs/releases/vX.Y.Z.md`.
-2. Run `build_apk.bat`. It reads the signing password from `FUEL_LEDGER_KEY_PASSWORD` in the private workspace `.env` (three folders above the repository), or asks for it with hidden input. `keystore.properties` points to the keystore and never contains the password.
+2. Run `build_apk.bat`. The APK is written to `dist/FuelLedger-vX.Y.Z.apk` and older APKs in `dist/` are deleted, so the folder always holds the latest build only. The script reads the signing password from `FUEL_LEDGER_KEY_PASSWORD` in the private workspace `.env` (three folders above the repository), or asks for it with hidden input. `keystore.properties` points to the keystore and never contains the password.
 3. Commit, tag `vX.Y.Z`, push the branch and the tag.
 4. Create the release with the APK attached:
 
 ```powershell
-gh release create vX.Y.Z FuelLedger-vX.Y.Z.apk --title "Fuel Ledger X.Y.Z" --notes-file docs/releases/vX.Y.Z.md
+gh release create vX.Y.Z dist/FuelLedger-vX.Y.Z.apk --title "Fuel Ledger X.Y.Z" --notes-file docs/releases/vX.Y.Z.md
 ```
+
+The download page (`docs/index.html`, served by GitHub Pages) always links to the APK of the newest release, so it needs no edit. Attach exactly one `.apk` per release.
 
 Never lose the keystore or its password: without them, installed apps cannot be updated.

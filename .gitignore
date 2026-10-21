@@ -33,6 +33,7 @@ local.properties
 Thumbs.db
 desktop.ini
 .worktrees/
+.slim/deepwork/
 
 # Documentation is always versioned
 !CHANGELOG.md

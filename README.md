@@ -8,6 +8,8 @@ An offline Android car logbook for fuel, running costs and maintenance reminders
 
 No account. No analytics. No network permission. Your records stay on your phone.
 
+**[Download the latest APK](https://francescocastaldi.github.io/fuel-ledger-android/)** from the project page, or see [installing and updating](docs/install.md).
+
 ## Dashboard in motion
 
 <p align="center">

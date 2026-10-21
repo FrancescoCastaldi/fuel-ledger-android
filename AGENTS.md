@@ -8,7 +8,7 @@
 4. Do not commit, tag or push without explicit conversation authorization.
 5. Use `DashTheme.colors` and the typography tokens in `ui/theme`. Keep one amber accent, tabular numbers and no gradients.
 6. Keep data offline. Do not add network access, analytics, cloud services or automatic cloud backup. CSV files must be chosen by the user.
-7. Never commit signing keys, passwords, `local.properties`, database files or APKs. Keep only the latest versioned APK locally.
+7. Never commit signing keys, passwords, `local.properties`, database files or APKs. Release APKs live in `dist/` and only the latest versioned one is kept: `build_apk.bat` deletes older builds from `dist/` after a successful build. Never leave APKs in the repository root.
 8. Never overwrite unrelated user changes. Follow the parent workspace instructions when available.
 
 ## Toolchain
