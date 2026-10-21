@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fuel Ledger</title>
+<meta name="description" content="An offline Android car logbook for fuel, running costs and maintenance reminders. No account, no analytics, no network permission.">
+<link rel="icon" href="brand/logo.svg" type="image/svg+xml">
+<style>
+  :root {
+    --bg: #F4F3EF;
+    --surface: #FFFFFF;
+    --line: #DAD7CE;
+    --text: #15181C;
+    --muted: #5A616B;
+    --accent: #FFA128;
+    --accent-text: #9A5200;
+    --on-accent: #0F1215;
+    --hero-bg: #0F1215;
+    --hero-text: #F2EFE8;
+    --hero-muted: #9AA1AB;
+    --display: "Barlow Condensed", "Roboto Condensed", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+    --body: "Barlow", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0F1215;
+      --surface: #171B20;
+      --line: #2A3038;
+      --text: #F2EFE8;
+      --muted: #9AA1AB;
+      --accent-text: #FFA128;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0F1215;
+    --surface: #171B20;
+    --line: #2A3038;
+    --text: #F2EFE8;
+    --muted: #9AA1AB;
+    --accent-text: #FFA128;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 17px/1.55 var(--body);
+  }
+  a { color: var(--accent-text); }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 16px; }
+
+  .hero { background: var(--hero-bg); color: var(--hero-text); padding: 40px 0 48px; }
+  .hero img.logo { display: block; width: min(100%, 520px); height: auto; border-radius: 16px; }
+  .hero h1 {
+    margin: 28px 0 8px;
+    font: 700 clamp(34px, 7vw, 56px)/1.05 var(--display);
+    letter-spacing: .01em;
+    text-transform: uppercase;
+  }
+  .hero p.lead { margin: 0; max-width: 34em; color: var(--hero-muted); font-size: 19px; }
+  .cta { margin-top: 28px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    min-height: 52px; padding: 12px 26px;
+    background: var(--accent); color: var(--on-accent);
+    font: 700 20px/1 var(--display); letter-spacing: .04em; text-transform: uppercase;
+    text-decoration: none; border-radius: 999px;
+  }
+  .btn:hover { filter: brightness(1.06); }
+  .btn:focus-visible, a:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+  .btn svg { width: 22px; height: 22px; flex: none; }
+  .meta { color: var(--hero-muted); font-size: 15px; font-variant-numeric: tabular-nums; }
+  .meta a { color: var(--accent); }
+
+  section { padding: 44px 0 0; }
+  h2 { margin: 0 0 16px; font: 700 28px/1.1 var(--display); letter-spacing: .03em; text-transform: uppercase; }
+  .facts { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+  .facts li, .card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; }
+  .facts strong { display: block; font: 700 20px/1.2 var(--display); letter-spacing: .03em; text-transform: uppercase; }
+  .facts span { color: var(--muted); font-size: 15px; }
+
+  .shots {
+    display: flex; gap: 14px; overflow-x: auto; padding: 4px 0 14px;
+    scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch;
+  }
+  .shots figure { margin: 0; flex: 0 0 auto; width: 220px; scroll-snap-align: start; }
+  .shots img { display: block; width: 100%; height: auto; border-radius: 14px; border: 1px solid var(--line); background: var(--surface); }
+  .shots figcaption { margin-top: 8px; font-size: 14px; color: var(--muted); }
+
+  .features { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+  .features li { padding-left: 18px; position: relative; }
+  .features li::before { content: ""; position: absolute; left: 0; top: .7em; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+  .features b { font-weight: 600; }
+
+  ol.steps { margin: 0; padding-left: 22px; display: grid; gap: 8px; }
+  code, .hash {
+    font: 14px/1.5 ui-monospace, SFMono-Regular, Consolas, Menlo, monospace;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 1px 6px;
+  }
+  .hash { display: block; margin-top: 10px; padding: 10px 12px; overflow-wrap: anywhere; }
+
+  footer { margin-top: 56px; padding: 24px 0 40px; border-top: 1px solid var(--line); color: var(--muted); font-size: 15px; }
+  footer p { margin: 0 0 8px; }
+
+  @media (min-width: 760px) {
+    .shots { overflow: visible; flex-wrap: wrap; }
+    .shots figure { width: calc((100% - 3 * 14px) / 4); }
+    .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <img class="logo" src="brand/logo.svg" alt="Fuel Ledger: an amber instrument dial with three ledger entries" width="640" height="180">
+    <h1>A logbook that stays on your phone</h1>
+    <p class="lead">An offline Android logbook for fuel, running costs and maintenance reminders. Built in Kotlin and Jetpack Compose, with an amber instrument cluster that follows your phone's light or dark theme.</p>
+    <div class="cta">
+      <a class="btn" id="download" href="https://github.com/FrancescoCastaldi/fuel-ledger-android/releases/latest" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 11 5 5 5-5"/><path d="M5 20h14"/></svg>
+        <span id="download-label">Download latest APK</span>
+      </a>
+      <span class="meta" id="download-meta">Android 8.0 or newer. Signed release, about 33 MB.</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section aria-labelledby="privacy">
+    <h2 id="privacy">Private by design</h2>
+    <ul class="facts">
+      <li><strong>No account</strong><span>Nothing to sign up for.</span></li>
+      <li><strong>No analytics</strong><span>No tracking, no cloud, no automatic backup.</span></li>
+      <li><strong>No network permission</strong><span>Your records stay on your phone. Backups are CSV files you choose.</span></li>
+    </ul>
+  </section>
+
+  <section aria-labelledby="look">
+    <h2 id="look">A look inside</h2>
+    <div class="shots">
+      <figure><img src="screenshots/dashboard_night.png" alt="Dashboard in the night theme with consumption gauge and odometer" width="1200" height="2580" loading="lazy"><figcaption>Night dashboard</figcaption></figure>
+      <figure><img src="screenshots/dashboard_day.png" alt="Dashboard in the day theme" width="1200" height="2580" loading="lazy"><figcaption>Day dashboard</figcaption></figure>
+      <figure><img src="screenshots/charts_night.png" alt="Charts of monthly spending and consumption per fill-up" width="1200" height="2580" loading="lazy"><figcaption>Charts</figcaption></figure>
+      <figure><img src="screenshots/refuel_form_night.png" alt="Fill-up form with receipt scan" width="1200" height="2580" loading="lazy"><figcaption>Fill-up form</figcaption></figure>
+    </div>
+    <p style="color:var(--muted);font-size:14px;margin:6px 0 0">Screenshots use synthetic data.</p>
+  </section>
+
+  <section aria-labelledby="features">
+    <h2 id="features">What it does</h2>
+    <ul class="features">
+      <li><b>Trip computer:</b> average consumption in L/100 km and km/L, cost per kilometer, monthly and yearly spending.</li>
+      <li><b>Receipt scan:</b> a photo fills in liters, price, total and date. Recognition runs on the phone and the photo is deleted afterwards.</li>
+      <li><b>Full-to-full consumption:</b> partial fill-ups between two full tanks count toward the same segment.</li>
+      <li><b>Range-based estimate:</b> note the range shown before refueling and partial fill-ups get an estimate too.</li>
+      <li><b>Reminders:</b> road tax, insurance, inspection and servicing, by date or kilometer threshold, with a daily local notification.</li>
+      <li><b>Home screen widget</b>, multiple vehicles and a single-file CSV backup.</li>
+    </ul>
+  </section>
+
+  <section aria-labelledby="install">
+    <h2 id="install">Install</h2>
+    <div class="cols">
+      <div class="card">
+        <ol class="steps">
+          <li>Download the APK on your phone with the button above.</li>
+          <li>Open it and allow installs from your browser or file manager when Android asks.</li>
+          <li>Later versions install over it without losing data.</li>
+        </ol>
+        <p style="margin:12px 0 0;color:var(--muted);font-size:15px">Prefer automatic updates? Add <code>https://github.com/FrancescoCastaldi/fuel-ledger-android</code> to <a href="https://github.com/ImranR98/Obtainium" rel="noopener">Obtainium</a>.</p>
+      </div>
+      <div class="card">
+        <strong>Check the signature</strong>
+        <p style="margin:6px 0 0;color:var(--muted);font-size:15px">Every release is signed with the same personal key. Android refuses an update signed with a different key. SHA-256 of the signing certificate:</p>
+        <span class="hash">2A:4B:94:09:10:7C:2C:D2:06:1D:BF:82:A1:9C:16:9C:2C:6B:2F:AE:38:68:76:FD:56:91:FC:FC:0F:86:1D:69</span>
+        <p style="margin:10px 0 0;font-size:15px"><a href="https://github.com/FrancescoCastaldi/fuel-ledger-android/blob/main/docs/install.md" rel="noopener">Full install and update guide</a></p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p><a href="https://github.com/FrancescoCastaldi/fuel-ledger-android" rel="noopener">Repository</a> · <a href="https://github.com/FrancescoCastaldi/fuel-ledger-android/releases" rel="noopener">All releases</a> · <a href="https://github.com/FrancescoCastaldi/fuel-ledger-android/blob/main/CHANGELOG.md" rel="noopener">Changelog</a></p>
+    <p>The source code on GitHub is stored encrypted. Fuel Ledger is not on Google Play.</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var link = document.getElementById("download");
+  var label = document.getElementById("download-label");
+  var meta = document.getElementById("download-meta");
+  // Always point the button at the newest release's APK; the static link above is the fallback.
+  fetch("https://api.github.com/repos/FrancescoCastaldi/fuel-ledger-android/releases/latest", {
+    headers: { "Accept": "application/vnd.github+json" }
+  })
+    .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(function (release) {
+      var apk = (release.assets || []).filter(function (a) { return /\.apk$/i.test(a.name); })[0];
+      if (!apk) return;
+      link.href = apk.browser_download_url;
+      label.textContent = "Download " + release.tag_name + " APK";
+      var mb = (apk.size / 1048576).toFixed(1);
+      var date = new Date(release.published_at).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
+      meta.textContent = "";
+      meta.appendChild(document.createTextNode(mb + " MB, released " + date + ". "));
+      var notes = document.createElement("a");
+      notes.href = release.html_url;
+      notes.rel = "noopener";
+      notes.textContent = "Release notes";
+      meta.appendChild(notes);
+    })
+    .catch(function () { /* keep the fallback link to the latest release page */ });
+})();
+</script>
+</body>
+</html>

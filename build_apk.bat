@@ -45,10 +45,19 @@ if errorlevel 1 (
     exit /b 1
 )
 
-echo [3/3] Copying versioned APK...
-copy /Y "app\build\outputs\apk\release\app-release.apk" "FuelLedger-v%VERSION%.apk" >nul
+echo [3/3] Copying versioned APK to dist...
+if not exist "dist" mkdir "dist"
+copy /Y "app\build\outputs\apk\release\app-release.apk" "dist\FuelLedger-v%VERSION%.apk" >nul
 if errorlevel 1 exit /b 1
 
+REM Only the latest APK is kept: the new one is in place, so older builds in dist\ are removed.
+for %%F in ("dist\FuelLedger-v*.apk") do (
+    if /i not "%%~nxF"=="FuelLedger-v%VERSION%.apk" (
+        echo Removing old build %%~nxF
+        del /q "%%F"
+    )
+)
+
 echo ========================================================
-echo   Ready: FuelLedger-v%VERSION%.apk
+echo   Ready: dist\FuelLedger-v%VERSION%.apk
 echo ========================================================

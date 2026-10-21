@@ -62,7 +62,9 @@ Under `app/src/test/java/com/fcastaldi/fuelledger/`:
 - `docs/brand/`: static and animated SVG wordmarks, palette and usage notes.
 - `docs/screenshots/`: reviewed English screenshots.
 - `docs/demo/dashboard.gif`: startup sequence rendered from Compose tests.
-- `build_apk.bat`: signing password prompt, test gate and versioned local release APK.
+- `build_apk.bat`: signing password prompt, test gate and versioned release APK in `dist/`, removing older builds there.
+- `dist/`: the latest signed APK only. Ignored by Git, never committed.
+- `docs/index.html`: GitHub Pages site (source: `main`, folder `/docs`). Its download button reads the latest release from the GitHub API, so it needs no edit per release. `docs/.nojekyll` turns off Jekyll processing.
 - `docs/install.md`: GitHub Releases, Obtainium, signing fingerprint and release steps.
 - `docs/releases/`: release notes used for each GitHub release.
 - `tools/outline_brand.py`: reproducible wordmark font outlining.
