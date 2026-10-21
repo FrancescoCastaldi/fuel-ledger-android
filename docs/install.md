@@ -46,7 +46,7 @@ Download `FuelLedger-vX.Y.Z.apk` from the release page on the phone, open it and
 ## Publishing a release (maintainer)
 
 1. Update `versionCode`, `versionName`, `VERSION` in `build_apk.bat` and `CHANGELOG.md`, and write `docs/releases/vX.Y.Z.md`.
-2. Run `build_apk.bat`. The APK is written to `dist/FuelLedger-vX.Y.Z.apk` and older APKs in `dist/` are deleted, so the folder always holds the latest build only. The script reads the signing password from `FUEL_LEDGER_KEY_PASSWORD` in the private workspace `.env` (three folders above the repository), or asks for it with hidden input. `keystore.properties` points to the keystore and never contains the password.
+2. Run `build_apk.bat`. The APK is written to `dist/FuelLedger-vX.Y.Z.apk` and older APKs in `dist/` are deleted, so the folder always holds the latest build only. The script then verifies the APK and ends with `RESULT: PASS` (detail in `build_apk.log`). It takes the signing password from a `storePassword=` line in the local `keystore.properties`, else from `FUEL_LEDGER_KEY_PASSWORD` in the private workspace `.env`, else asks for it with hidden input. `keystore.properties` is ignored by Git and must never be committed.
 3. Commit, tag `vX.Y.Z`, push the branch and the tag.
 4. Create the release with the APK attached:
 
