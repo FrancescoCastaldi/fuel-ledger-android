@@ -28,7 +28,9 @@ The Italian `DiarioAuto` prototype uses a different CSV format and cannot be imp
 
 ## Update from the app
 
-From 0.5.0 on, **Settings > Updates > Check for updates** asks GitHub for the latest release. If it is newer than the installed version the row becomes **Update app**: tap it to download the APK in the browser, then open the file to install it over the current app. Your records are kept, because the signing key is the same. Besides the optional [cloud sync](cloud-sync.md), this is the only network request the app makes, and it happens only when you tap the row.
+From 0.5.0 on, **Settings > Updates > Check for updates** asks GitHub for the latest release. If it is newer than the installed version the row becomes **Update app**. Tapping it downloads the APK inside the app with a progress bar, checks it against the published SHA-256 and the signing key, and opens Android's installer over the current app. Your records are kept, because the signing key is the same. Besides the optional [cloud sync](cloud-sync.md), these are the only network requests the app makes, and they happen only when you tap the row.
+
+From 0.8.0 on, the first update needs two things from you, once: allowing installs from Fuel Ledger when Android asks (the app opens that settings page and continues by itself when you come back), and tapping **Update** in Android's own dialog. Versions before 0.8.0 do not have this, so **0.8.0 itself is installed by hand**: download `FuelLedger-v0.8.0.apk` from the release page, as described above. If the in-app download or the installer fails, **Download from the browser instead** is offered as a fallback.
 
 ## Install with Obtainium
 

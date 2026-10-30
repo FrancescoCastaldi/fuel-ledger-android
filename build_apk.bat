@@ -7,7 +7,7 @@ REM   build_apk.bat verify     verify the APK already in dist\ (no build)
 REM   add "nopause" to skip the final pause
 
 REM Keep aligned with versionName in app\build.gradle.kts
-set "VERSION=0.7.0"
+set "VERSION=0.8.0"
 
 set "NOPAUSE="
 set "VERIFYONLY="
@@ -156,6 +156,7 @@ set "BADGING=%TEMP%\fuel-ledger-badging.txt"
 findstr /c:"package: name='com.fcastaldi.fuelledger' versionCode='%VCODE%' versionName='%VNAME%'" "%BADGING%" >nul && (call :pass "APK package, versionCode and versionName match the sources") || (call :fail "APK package or version differs from the sources")
 findstr /c:"uses-permission: name='android.permission.INTERNET'" "%BADGING%" >nul && (call :pass "INTERNET declared (update check)") || (call :fail "INTERNET is not declared")
 findstr /c:"uses-permission: name='android.permission.CAMERA'" "%BADGING%" >nul && (call :pass "CAMERA declared (dashboard scan)") || (call :fail "CAMERA is not declared")
+findstr /c:"uses-permission: name='android.permission.REQUEST_INSTALL_PACKAGES'" "%BADGING%" >nul && (call :pass "REQUEST_INSTALL_PACKAGES declared (in-app update)") || (call :fail "REQUEST_INSTALL_PACKAGES is not declared")
 findstr /c:"ACCESS_NETWORK_STATE" "%BADGING%" >nul && (call :fail "ACCESS_NETWORK_STATE is declared") || (call :pass "ACCESS_NETWORK_STATE not declared")
 findstr /c:"POST_NOTIFICATIONS" "%BADGING%" >nul && (call :pass "POST_NOTIFICATIONS declared (reminders)") || (call :fail "POST_NOTIFICATIONS is not declared")
 findstr /r /c:"^locales:.* 'it'" "%BADGING%" >nul && (call :pass "Italian resources are packaged") || (call :fail "Italian resources are missing")
