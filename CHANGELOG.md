@@ -6,6 +6,21 @@ The format follows [Keep a Changelog 1.1.0](https://keepachangelog.com/en/1.1.0/
 
 ## [Unreleased]
 
+## [0.8.0] - 2026-10-30
+
+### Added
+
+- In-app updates: **Settings > Updates > Update app** downloads the new APK from GitHub inside the app, with a progress bar and cancel. The download is checked against the published SHA-256 and the signing certificate, then handed to Android's installer. The first time, Android asks once to allow installs from Fuel Ledger; the app continues by itself when you come back. If the in-app path fails, the browser download stays one tap away.
+- Tests for the download (progress, digest, cancel, cleanup), the decision on the downloaded APK, and the update flow with fakes for the network, the package manager and the installer.
+
+### Changed
+
+- The update row is driven by a service that lives in the app, so a download keeps going when you leave Settings.
+
+### Upgrading
+
+- 0.8.0 is installed by hand, once, from the release page. From 0.8.1 on, updates run from the app.
+
 ## [0.7.0] - 2026-10-30
 
 ### Added

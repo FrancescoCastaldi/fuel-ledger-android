@@ -6,7 +6,7 @@
 
 An offline Android car logbook for fuel, running costs and maintenance reminders. Built in Kotlin and Jetpack Compose, with an amber instrument cluster that follows your phone's light or dark theme.
 
-No account of its own. No analytics. The app goes online only when you tap a button in Settings: **Check for updates**, or, if you have set it up, **Sync now** with your own Supabase project. Your records stay on your phone unless you turn that sync on.
+No account of its own. No analytics. The app goes online only when you tap a button in Settings: **Check for updates** and **Update app** (which downloads the new APK from GitHub), or, if you have set it up, **Sync now** with your own Supabase project. Your records stay on your phone unless you turn that sync on.
 
 **[Download the latest APK](https://francescocastaldi.github.io/fuel-ledger-android/)** from the project page, or see [installing and updating](docs/install.md).
 
@@ -33,7 +33,7 @@ The demo uses actual Compose test frames and synthetic records. The needle shows
 - **Charts:** monthly fuel/other spending and consumption per full tank, with tap-to-inspect values.
 - **Multiple vehicles** and a single-file **CSV backup**, selected through Android's document picker.
 - **Optional cloud sync:** sign in with Google to your own Supabase project and sync fill-ups, expenses, reminders and vehicles both ways between phones, newest change wins. **Migrate and sync** uploads what is already on the phone. It is off until you build the app with your project's URL and key and sign in; nothing syncs in the background. Setup in [docs/cloud-sync.md](docs/cloud-sync.md).
-- **Update from the app:** Settings has a **Check for updates** button. It compares the installed version with the latest GitHub release and, when there is a newer one, becomes **Update app** and opens the APK download.
+- **Update from the app:** Settings has a **Check for updates** button. It compares the installed version with the latest GitHub release and, when there is a newer one, becomes **Update app**: one tap downloads the APK inside the app, checks it against the published digest and the signing key, and opens Android's installer. Allowing installs from Fuel Ledger is asked once.
 - **Motion:** cold-start needle rise with the ledger lines drawing in, dashboard ignition sweep, counting digits and rolling odometer, charts that grow and draw themselves, lists that cascade in and collapse when swiped, and transitions that tell tab switches from deeper screens. All of it stops when system animations are disabled.
 - **English and Italian:** the app follows the phone's language, with numbers and dates to match. On Android 13 and later you can also pick the language per app in the system settings.
 
@@ -101,7 +101,7 @@ ffmpeg -y -framerate 15.625 -i app/build/demo-frames/frame_%03d.png -filter_comp
 
 ## Privacy and backups
 
-Room stores data locally. Android automatic cloud backup is disabled, and the app goes online only when you tap a button in Settings. **Check for updates** makes one request to the GitHub API for the latest release, with no data about you or your records. **Sync now**, available only if you configured your own Supabase project and signed in, sends your records to that project and nothing anywhere else; the sign-in session stays in the app's private storage. The manifest removes the network-state permission that ML Kit declares for optional telemetry. Receipt photos go to the app cache through the system camera or photo picker, so no camera or storage permission is needed. CSV export is manual; choosing a cloud document provider can upload that file through the provider, not through Fuel Ledger. Import replaces all current records after confirmation.
+Room stores data locally. Android automatic cloud backup is disabled, and the app goes online only when you tap a button in Settings. **Check for updates** makes one request to the GitHub API for the latest release, with no data about you or your records. **Update app** downloads that release's APK from GitHub and hands it to Android's installer; the download is checked against the published SHA-256 and the signing key before it is offered. **Sync now**, available only if you configured your own Supabase project and signed in, sends your records to that project and nothing anywhere else; the sign-in session stays in the app's private storage. The manifest removes the network-state permission that ML Kit declares for optional telemetry. Receipt photos go to the app cache through the system camera or photo picker, so no storage permission is needed. The camera permission is requested only when you open the dashboard scan, and the install permission only when you update the app. CSV export is manual; choosing a cloud document provider can upload that file through the provider, not through Fuel Ledger. Import replaces all current records after confirmation.
 
 Fuel Ledger has a new application ID. It installs separately from the earlier Italian prototype and does not automatically migrate its data. Its CSV format starts with `#fuel-ledger,1` and uses English enum names; prototype CSV files are not directly compatible.
 

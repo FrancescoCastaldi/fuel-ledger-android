@@ -50,7 +50,11 @@ Paths below are relative to `app/src/main/java/com/fcastaldi/fuelledger/`.
 | `sync/CloudApi.kt`, `sync/CloudCodec.kt` | The cloud as the engine sees it, and the conversion of records to and from cloud rows |
 | `sync/SupabaseApi.kt`, `sync/SupabaseAuth.kt`, `sync/Http.kt`, `sync/Pkce.kt` | REST client, Google sign-in through the browser with a proof key, session storage |
 | `sync/CloudService.kt`, `ui/settings/CloudViewModel.kt` | Sign-in state, sync in the app scope, and the Settings view of it |
-| `update/ReleaseVersion.kt`, `update/GitHubReleases.kt` | Version comparison and the latest-release request, made only when the user taps Check for updates |
+| `update/ReleaseVersion.kt`, `update/GitHubReleases.kt` | Version comparison and the latest-release request (size and digest of the APK included), made only when the user taps Check for updates |
+| `update/UpdateService.kt` | Check, download, verify and install flow of the app's update, with its state; lives in the app scope like the cloud sync |
+| `update/ApkDownloader.kt` | Streams the APK into a `.part` file with progress and SHA-256, deletes partial files on failure or cancel |
+| `update/UpdateDecision.kt`, `update/ApkInspector.kt` | Compares the candidate APK with the installed app (package, version code, signer); reads both through `PackageManager` |
+| `update/SelfInstaller.kt`, `update/InstallResultReceiver.kt` | Installs through a `PackageInstaller` session and receives its outcome |
 | `ui/settings/UpdateViewModel.kt` | State of the update row in Settings |
 | `ui/Motion.kt` | Shared easing and timing, staggered entrance, count-up and the entrance window of lists |
 | `ui/theme/` | Day/night colors, Barlow typography and shapes |
@@ -72,7 +76,8 @@ Under `app/src/test/java/com/fcastaldi/fuelledger/`:
 - `ui/FmtTest.kt`: English and Italian formatting and reminder phrases.
 - `ui/StringResourcesTest.kt`, `ui/ItalianLocalizationTest.kt`: parity of `values/` and `values-it/`, and Italian text under Robolectric.
 - `sync/SyncEngineTest.kt`, `sync/CloudCodecTest.kt`, `sync/AuthTest.kt`: sync between two phones and a fake cloud, record conversion, proof key and session parsing.
-- `update/UpdateTest.kt`: version comparison, release JSON parsing and the update state machine.
+- `update/UpdateTest.kt`: version comparison, release JSON parsing and the check states.
+- `update/UpdateServiceTest.kt`, `update/ApkDownloaderTest.kt`, `update/UpdateDecisionTest.kt`: the download, verification and install flow with fakes.
 - `ui/MotionTest.kt`, `ui/SwipeToDeleteTest.kt`: stagger timing and swipe-to-delete.
 - `ui/ScreenshotTest.kt`: review screenshots, splash completion and dashboard animation frames.
 - `domain/ReceiptParserTest.kt`: receipt layouts, cross-checks, totals and dates.
