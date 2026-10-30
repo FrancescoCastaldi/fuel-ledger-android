@@ -10,6 +10,7 @@
 6. Keep data offline by default. There are two network paths, both started by a tap in Settings and never in the background: the update (`update/`: reads the latest release through `update/GitHubReleases.kt` and, when the user taps Update app, downloads that release's APK from GitHub and hands it to the system installer; it sends nothing about the user) and the optional sync with the user's own Supabase project (`sync/`, inert unless `supabase.properties` is present at build time and the user signs in). Do not add other network access, analytics, third-party cloud services or automatic cloud backup. Never put the Supabase `service_role` key or `supabase.properties` in the repository. CSV files must be chosen by the user.
 7. Never commit signing keys, passwords, `local.properties`, database files or APKs. Release APKs live in `dist/` and only the latest versioned one is kept: `build_apk.bat` deletes older builds from `dist/` after a successful build. Never leave APKs in the repository root.
 8. Never overwrite unrelated user changes. Follow the parent workspace instructions when available.
+9. One branch only: `main`. Do not keep feature branches, locally or on GitHub. Work lands on `main`; for a change that needs review, open a pull request from a short-lived branch and delete it as soon as it is merged. Release tags point to commits that are on `main`.
 
 ## Toolchain
 
