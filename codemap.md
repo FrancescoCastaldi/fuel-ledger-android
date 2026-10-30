@@ -41,7 +41,11 @@ Paths below are relative to `app/src/main/java/com/fcastaldi/fuelledger/`.
 | `scan/TextScanner.kt` | ML Kit recognition of one photo, with its upright size |
 | `scan/DashboardScanner.kt` | Gallery photo of the cluster; values are marked for checking |
 | `scan/DashboardCamera.kt` | Live CameraX preview and frame analysis, nothing written to disk |
-| `ui/refuels/DashboardScanDialog.kt` | Full-screen live scan: permission, guide frame, locked values and the accept action |
+| `ui/refuels/ScanSessionDialog.kt` | Guided live scan in the camera: cluster first, then the pump display; each step ends in a pop-up that waits for Confirm |
+| `domain/PumpParser.kt` | Pump display figures (amount, liters, price per liter), accepted only when liters x price matches the amount |
+| `domain/OcrDigits.kt` | OCR confusions in numbers (O to 0, S to 5 and so on), shared by the cluster and pump readers |
+| `domain/Votes.kt` | Generic lock of a value over camera frames; the cluster and the pump use it |
+| `domain/ScanSession.kt` | Pure state of one guided scan: steps, pop-ups, confirm, reread and skip |
 | `widget/FuelLedgerWidget.kt` | Glance widget, receiver, day/night palette and fill-up shortcut |
 | `widget/WidgetSummary.kt` | Formatted widget data for the selected vehicle |
 | `ui/Fmt.kt`, `ui/Icons.kt` | Language-aware formatting and type-to-icon mapping |

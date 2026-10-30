@@ -6,6 +6,19 @@ The format follows [Keep a Changelog 1.1.0](https://keepachangelog.com/en/1.1.0/
 
 ## [Unreleased]
 
+## [0.9.0] - 2026-10-30
+
+### Added
+
+- Guided scan of a fill-up, in the camera: the widget's fuel shortcut and the dashboard's **+** open it straight away. It reads the odometer and the range from the cluster first, then the amount, liters and price per liter from the pump display. Each step shows a pop-up with what it read, and nothing reaches the form until you tap **Confirm**. **Reread** and **Skip** are always there, and **Use the receipt** falls back to the photo flow.
+- A pump display is accepted only when its three figures agree (liters x price = amount). A digit misread by the camera breaks that check, so it is not offered.
+- Tests for the pump reader, the value lock shared by the cluster and the pump, and the state of a guided scan.
+
+### Changed
+
+- The cluster and the receipt share one form path: the pump's figures fill liters, price and total the same way a receipt does.
+- The OCR number corrections are one shared module.
+
 ## [0.8.0] - 2026-10-30
 
 ### Added

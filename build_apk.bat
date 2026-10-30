@@ -7,7 +7,7 @@ REM   build_apk.bat verify     verify the APK already in dist\ (no build)
 REM   add "nopause" to skip the final pause
 
 REM Keep aligned with versionName in app\build.gradle.kts
-set "VERSION=0.8.0"
+set "VERSION=0.9.0"
 
 set "NOPAUSE="
 set "VERIFYONLY="
