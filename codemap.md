@@ -10,6 +10,7 @@ Compose screens -> ViewModel (StateFlow) -> CarRepository -> Room (AppDatabase)
 DeadlineReminderWorker (daily WorkManager) ------+--> Local notifications, widget refresh
 FuelLedgerWidget (Glance) -------------------------+
 Fill-up form -> ReceiptScanner (ML Kit, on device) -> ReceiptParser
+Fill-up form -> DashboardScanDialog -> DashboardCamera (CameraX + ML Kit, on device) -> DashboardParser -> ReadingStabilizer
 ```
 
 `AppContainer` in `FuelLedgerApp` creates the database and repository. `FuelLedgerApp` also refreshes the widget whenever `currentData` changes. `AppViewModelProvider` constructs ViewModels. SharedPreferences stores the selected vehicle. `CarRepository.currentData` emits its vehicle, fill-ups, expenses and reminders.
@@ -22,7 +23,7 @@ Paths below are relative to `app/src/main/java/com/fcastaldi/fuelledger/`.
 |:---|:---|
 | `FuelLedgerApp.kt` | Application, dependency container, reminder scheduling |
 | `MainActivity.kt` | System splash, edge-to-edge window, cold-start UI, notification permission, `ACTION_ADD_REFUEL` |
-| `data/entity/Entities.kt` | Room entities and English type enums |
+| `data/entity/Entities.kt` | Room entities, English type enums and the 3x3 cluster grid (`DashSpot`) of each vehicle |
 | `data/Daos.kt`, `data/AppDatabase.kt` | Queries, database and date converters |
 | `data/CarRepository.kt` | Selected vehicle, flows, CRUD and transactional import |
 | `domain/ConsumptionCalculator.kt` | Full-to-full consumption and weighted averages |
@@ -32,7 +33,15 @@ Paths below are relative to `app/src/main/java/com/fcastaldi/fuelledger/`.
 | `domain/RefuelMath.kt` | Missing fill-up value and odometer validation |
 | `domain/CsvCodec.kt` | Single-file CSV with V, R, E and D record types |
 | `domain/ReceiptParser.kt` | OCR line merging and liters, price, total and date extraction |
-| `scan/ReceiptScanner.kt` | Camera cache URI, ML Kit recognition and photo cleanup |
+| `domain/DashboardParser.kt` | Scores numbers on the cluster for the odometer and the range by cell, unit, label and history |
+| `domain/ReadingStabilizer.kt` | Locks a value once it holds across frames, and shows the most frequent one until then |
+| `domain/DashboardHistory.kt` | Odometer limits and expected reading from a car's fill-ups around a date |
+| `domain/ViewfinderMap.kt` | Guide frame on screen and mapping of photo words onto it, undoing the preview crop |
+| `scan/ReceiptScanner.kt` | Camera cache URI for receipt photos, reading and photo cleanup |
+| `scan/TextScanner.kt` | ML Kit recognition of one photo, with its upright size |
+| `scan/DashboardScanner.kt` | Gallery photo of the cluster; values are marked for checking |
+| `scan/DashboardCamera.kt` | Live CameraX preview and frame analysis, nothing written to disk |
+| `ui/refuels/DashboardScanDialog.kt` | Full-screen live scan: permission, guide frame, locked values and the accept action |
 | `widget/FuelLedgerWidget.kt` | Glance widget, receiver, day/night palette and fill-up shortcut |
 | `widget/WidgetSummary.kt` | Formatted widget data for the selected vehicle |
 | `ui/Fmt.kt`, `ui/Icons.kt` | Language-aware formatting and type-to-icon mapping |
@@ -45,7 +54,7 @@ Paths below are relative to `app/src/main/java/com/fcastaldi/fuelledger/`.
 | `ui/settings/UpdateViewModel.kt` | State of the update row in Settings |
 | `ui/Motion.kt` | Shared easing and timing, staggered entrance, count-up and the entrance window of lists |
 | `ui/theme/` | Day/night colors, Barlow typography and shapes |
-| `ui/components/` | Gauge, rolling odometer, charts, forms and swipe rows |
+| `ui/components/` | Gauge, rolling odometer, charts, forms, swipe rows and the cluster spot picker (`SpotPicker.kt`) |
 | `ui/components/FuelLedgerSplash.kt` | Vector mark and animated cold-start needle |
 | `ui/dashboard/`, `ui/refuels/`, `ui/expenses/` | Main records and forms |
 | `ui/deadlines/`, `ui/stats/`, `ui/settings/` | Reminders, charts, vehicles and CSV picker |
@@ -67,6 +76,7 @@ Under `app/src/test/java/com/fcastaldi/fuelledger/`:
 - `ui/MotionTest.kt`, `ui/SwipeToDeleteTest.kt`: stagger timing and swipe-to-delete.
 - `ui/ScreenshotTest.kt`: review screenshots, splash completion and dashboard animation frames.
 - `domain/ReceiptParserTest.kt`: receipt layouts, cross-checks, totals and dates.
+- `domain/DashboardParserTest.kt`, `domain/ReadingStabilizerTest.kt`, `domain/DashboardHistoryTest.kt`, `domain/ViewfinderMapTest.kt`: cluster readings, value locking, odometer limits and frame mapping.
 - `widget/WidgetSummaryTest.kt`, `widget/WidgetRenderTest.kt`: widget data and RemoteViews screenshots.
 
 ## Assets and delivery

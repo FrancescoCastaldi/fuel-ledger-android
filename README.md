@@ -22,7 +22,8 @@ The demo uses actual Compose test frames and synthetic records. The needle shows
 
 - **Trip computer:** average consumption in L/100 km and km/L, rolling odometer, cost per kilometer, monthly and yearly spending.
 - **Fill-ups:** date, odometer, liters, unit price and total. Enter any two monetary/volume values to calculate the third. Odometer validation checks neighboring fill-ups.
-- **Receipt scan:** take a photo or pick one from the gallery to fill in liters, price, total and date. Text recognition runs on the phone with the bundled ML Kit model, and the photo is deleted after reading. The odometer is always entered by hand.
+- **Receipt scan:** take a photo or pick one from the gallery to fill in liters, price, total and date. Text recognition runs on the phone with the bundled ML Kit model, and the photo is deleted after reading.
+- **Dashboard scan:** frame the instrument cluster in the live camera view, and the app reads the odometer and the remaining range once they hold steady. Each vehicle says where these values sit on its dashboard. Everything runs on the phone, frames are never saved, and the camera is used only while the scan is open.
 - **Home screen widget:** average consumption, odometer, the most urgent reminder and a fill-up shortcut that opens the form directly. It follows the phone's light or dark theme.
 - **Full-to-full consumption:** partial fill-ups between two full tanks count toward the same segment. A distance-weighted average avoids misleading results.
 - **Range-based estimate:** note the range shown before refueling and partial fill-ups get a consumption estimate too. A calibration against full-to-full segments corrects a board computer that reads optimistic.
@@ -89,7 +90,7 @@ Without `keystore.properties`, release builds use the local Android debug key. T
 
 ## Tests and demo generation
 
-The JVM suite covers consumption, costs, reminders, form calculations, odometer validation, receipt parsing, the widget summary, CSV round trips, Room transactions and English formatting. Robolectric renders review screenshots of the app and the widget to `app/build/screenshots/`; these are visual review aids, not pixel-diff assertions.
+The JVM suite covers consumption, costs, reminders, form calculations, odometer validation, receipt parsing, dashboard readings and their stabilizer, the widget summary, CSV round trips, Room transactions and English formatting. Robolectric renders review screenshots of the app and the widget to `app/build/screenshots/`; these are visual review aids, not pixel-diff assertions.
 
 `ScreenshotTest.dashboardDemoFrames` also writes 48 dashboard startup frames to `app/build/demo-frames/`. To regenerate the README GIF with FFmpeg:
 
