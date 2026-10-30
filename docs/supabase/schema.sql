@@ -12,6 +12,8 @@ create table if not exists public.vehicles (
   plate       text,
   fuel_type   text,
   initial_km  integer,
+  odometer_spot text,
+  range_spot    text,
   updated_at  bigint not null,
   deleted_at  bigint,
   constraint vehicles_complete check (
@@ -19,6 +21,11 @@ create table if not exists public.vehicles (
     or (name is not null and plate is not null and fuel_type is not null and initial_km is not null)
   )
 );
+
+-- Upgrading from 0.6: run these two lines once, before installing 0.7. Sync fails on unknown columns until they exist.
+-- The columns are nullable, so rows written by 0.6 phones stay valid.
+alter table public.vehicles add column if not exists odometer_spot text;
+alter table public.vehicles add column if not exists range_spot text;
 
 create table if not exists public.refuels (
   uuid             uuid primary key,

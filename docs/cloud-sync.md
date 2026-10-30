@@ -32,6 +32,10 @@ Fuel Ledger works fully offline. Optionally it can sync with a Supabase project 
 - A CSV import replaces the phone's records with new ones. The next sync removes the replaced records from the cloud and uploads the imported ones.
 - Phones with clocks far off can make their edits win or lose unfairly. Keep automatic time on.
 
+## Updating from 0.6
+
+Version 0.7 adds two columns to `vehicles`: where the odometer and the range sit on the dashboard. Before installing 0.7 on a phone that syncs, run the two `alter table` lines at the top of [supabase/schema.sql](supabase/schema.sql) in the SQL editor of your project. Without them the upload is refused, and the sync reports it. Rows that 0.6 phones wrote stay valid, because the columns are nullable.
+
 ## Privacy
 
 Records (vehicle names and plates, odometer readings, fuel and costs, reminders) are stored in your Supabase project, in the region you chose, under your control. The app sends them only when you tap Sync now. The sign-in session is kept in the app's private storage and is removed when you sign out. Signing out does not delete data on the phone or in the cloud; to remove the cloud copy, delete the rows or the project in Supabase.

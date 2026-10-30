@@ -6,6 +6,24 @@ The format follows [Keep a Changelog 1.1.0](https://keepachangelog.com/en/1.1.0/
 
 ## [Unreleased]
 
+## [0.7.0] - 2026-10-30
+
+### Added
+
+- Dashboard scan in the new fill-up form: a live camera view reads the odometer and the remaining range from the instrument cluster, on the phone. A value is taken once it holds steady across frames, and **Use values** fills the form. Frames are never saved. A gallery photo works too, and its values are marked for checking.
+- Cluster positions per vehicle: a 3x3 map in the vehicle form tells the scan where the odometer and the range are printed. The default is the bottom corners.
+- Tests for the dashboard parser, the value stabilizer, the odometer limits from the history, the frame mapping and the version 4 migration.
+
+### Changed
+
+- The database moves to schema version 4: two columns on vehicles. Existing data is kept, and existing cars get the bottom corners.
+- CSV backups and cloud rows carry the two positions. Files and rows written before 0.7 import with the bottom corners.
+- The receipt scan message points to the cluster scan for the odometer.
+
+### Upgrading with cloud sync
+
+- Run the two `alter table` lines at the top of `docs/supabase/schema.sql` in your Supabase project before installing 0.7 on any phone that syncs. Sync fails on unknown columns until they exist.
+
 ## [0.6.0] - 2026-10-21
 
 ### Added
