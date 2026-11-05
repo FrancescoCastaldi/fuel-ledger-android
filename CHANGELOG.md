@@ -6,6 +6,8 @@ The format follows [Keep a Changelog 1.1.0](https://keepachangelog.com/en/1.1.0/
 
 ## [Unreleased]
 
+## [0.10.0] - 2026-11-05
+
 ### Added
 
 - Automated GitHub Actions keep-alive workflow (`.github/workflows/supabase-keepalive.yml`) pinging Supabase REST API every 3 days to eliminate the 7-day inactivity project pause on the free tier.
