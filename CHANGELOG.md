@@ -6,6 +6,13 @@ The format follows [Keep a Changelog 1.1.0](https://keepachangelog.com/en/1.1.0/
 
 ## [Unreleased]
 
+## [0.11.1] - 2026-11-05
+
+### Changed
+
+- The intro video is no longer shown at startup. It is opened from **Settings > About > Intro video**.
+- **Settings > Updates** checks the version first: a release that is not newer than the installed app is never downloaded.
+
 ## [0.11.0] - 2026-11-05
 
 ### Added
