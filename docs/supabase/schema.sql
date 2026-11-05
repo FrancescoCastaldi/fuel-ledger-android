@@ -117,3 +117,29 @@ create policy "own rows" on public.vehicles  for all to authenticated using (use
 create policy "own rows" on public.refuels   for all to authenticated using (user_id = auth.uid()) with check (user_id = auth.uid());
 create policy "own rows" on public.expenses  for all to authenticated using (user_id = auth.uid()) with check (user_id = auth.uid());
 create policy "own rows" on public.deadlines for all to authenticated using (user_id = auth.uid()) with check (user_id = auth.uid());
+
+-- Upgrading for receipt attachments: run these lines in the SQL editor:
+alter table public.refuels add column if not exists receipt_path text;
+alter table public.expenses add column if not exists receipt_path text;
+
+-- Storage bucket for receipt and invoice attachments:
+insert into storage.buckets (id, name, public)
+values ('receipts', 'receipts', false)
+on conflict (id) do nothing;
+
+create policy "authenticated receipts read" on storage.objects
+  for select to authenticated
+  using (bucket_id = 'receipts' and (storage.foldername(name))[1] = auth.uid()::text);
+
+create policy "authenticated receipts insert" on storage.objects
+  for insert to authenticated
+  with check (bucket_id = 'receipts' and (storage.foldername(name))[1] = auth.uid()::text);
+
+create policy "authenticated receipts update" on storage.objects
+  for update to authenticated
+  using (bucket_id = 'receipts' and (storage.foldername(name))[1] = auth.uid()::text);
+
+create policy "authenticated receipts delete" on storage.objects
+  for delete to authenticated
+  using (bucket_id = 'receipts' and (storage.foldername(name))[1] = auth.uid()::text);
+

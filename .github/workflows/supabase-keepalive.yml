@@ -1,0 +1,34 @@
+name: Supabase Keep-Alive
+
+on:
+  schedule:
+    # Run every 3 days at 06:00 UTC to prevent Supabase 7-day inactivity pause
+    - cron: '0 6 */3 * *'
+  workflow_dispatch:
+
+jobs:
+  keepalive:
+    name: Ping Supabase Project
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send keep-alive HTTP GET
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL || 'https://jxrhojwcftsejxyquqyz.supabase.co' }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+        run: |
+          if [ -z "$SUPABASE_ANON_KEY" ]; then
+            echo "::warning::SUPABASE_ANON_KEY is not set in repository secrets. Falling back to public URL ping."
+            HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" "$SUPABASE_URL/rest/v1/")
+          else
+            HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" \
+              "$SUPABASE_URL/rest/v1/vehicles?select=uuid&limit=1" \
+              -H "apikey: $SUPABASE_ANON_KEY" \
+              -H "Authorization: Bearer $SUPABASE_ANON_KEY")
+          fi
+          echo "Supabase returned HTTP $HTTP_CODE"
+          if [ "$HTTP_CODE" -ge 200 ] && [ "$HTTP_CODE" -lt 500 ]; then
+            echo "Supabase project successfully pinged (activity registered)."
+          else
+            echo "Unexpected HTTP status: $HTTP_CODE"
+            exit 1
+          fi

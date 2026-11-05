@@ -6,6 +6,20 @@ The format follows [Keep a Changelog 1.1.0](https://keepachangelog.com/en/1.1.0/
 
 ## [Unreleased]
 
+### Added
+
+- Automated GitHub Actions keep-alive workflow (`.github/workflows/supabase-keepalive.yml`) pinging Supabase REST API every 3 days to eliminate the 7-day inactivity project pause on the free tier.
+- Optional periodic background sync worker (`PeriodicSyncWorker`) scheduled with WorkManager every 3 days on unmetered networks to keep cloud data fresh and keep the Supabase project active.
+- Receipt and invoice photo attachments support for refuels and expenses: local caching and compression (`AttachmentManager`) and Supabase Storage client (`SupabaseStorageApi`).
+- Room database schema version 5 migration adding `receiptPath` to `refuels` and `expenses` tables, with full test coverage and schema export (`5.json`).
+- Seasonal tire mileage tracker (`TireTracker`): calculates km driven on summer vs winter tires and computes upcoming seasonal swap deadlines.
+- Fiscal report and business mileage exporter (`ReportExporter`): calculates mileage, total costs, fuel cost per km, and exports summary CSV for expense reimbursements.
+
+### Changed
+
+- Supabase cloud sync codec (`CloudCodec`) and CSV backup (`CsvCodec`) updated to support the new optional `receipt_path` field while maintaining 100% backward compatibility with existing backups and cloud records.
+- Cloud schema (`docs/supabase/schema.sql`) updated with `receipt_path` columns, `receipts` storage bucket and row-level security policies.
+
 ## [0.9.0] - 2026-10-30
 
 ### Added
