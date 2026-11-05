@@ -7,7 +7,7 @@ REM   build_apk.bat verify     verify the APK already in dist\ (no build)
 REM   add "nopause" to skip the final pause
 
 REM Keep aligned with versionName in app\build.gradle.kts
-set "VERSION=0.10.0"
+set "VERSION=0.10.1"
 
 set "NOPAUSE="
 set "VERIFYONLY="
@@ -165,8 +165,9 @@ findstr /c:"native-code: 'arm64-v8a'" "%BADGING%" >nul && (call :pass "ARM nativ
 
 REM Signature: valid, and the certificate is the documented release key, not the debug key.
 set "SIGNER=%TEMP%\fuel-ledger-signer.txt"
-call "%BT%\apksigner.bat" verify --print-certs "%APK%" > "%SIGNER%" 2>&1
+call "%BT%\apksigner.bat" verify -v --print-certs "%APK%" > "%SIGNER%" 2>&1
 if errorlevel 1 (call :fail "APK signature does not verify") else (call :pass "APK signature verifies")
+findstr /c:"Verified using v3 scheme (APK Signature Scheme v3): true" "%SIGNER%" >nul && (call :pass "APK Signature Scheme v3 verified") || (call :fail "APK Signature Scheme v3 is not enabled")
 set "ACTUAL="
 for /f "tokens=2 delims=:" %%A in ('findstr /c:"Signer #1 certificate SHA-256 digest" "%SIGNER%"') do set "ACTUAL=%%A"
 set "ACTUAL=%ACTUAL: =%"

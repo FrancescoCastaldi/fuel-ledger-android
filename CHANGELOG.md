@@ -6,6 +6,13 @@ The format follows [Keep a Changelog 1.1.0](https://keepachangelog.com/en/1.1.0/
 
 ## [Unreleased]
 
+## [0.10.1] - 2026-11-05
+
+### Changed
+
+- Enabled APK Signature Scheme v1, v2, and v3 (`enableV3Signing = true`) for Android 9 to 14 key lineage verification and Play Protect compatibility.
+- Configured `PackageInstaller.SessionParams` in `SelfInstaller` with `PACKAGE_SOURCE_STORE` (API 33+) and `setRequestUpdateOwnership(true)` (API 34+) so in-app updates bypass browser download warnings and claim update ownership.
+
 ## [0.10.0] - 2026-11-05
 
 ### Added
