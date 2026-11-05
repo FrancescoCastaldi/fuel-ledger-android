@@ -6,6 +6,20 @@ The format follows [Keep a Changelog 1.1.0](https://keepachangelog.com/en/1.1.0/
 
 ## [Unreleased]
 
+## [0.11.0] - 2026-11-05
+
+### Added
+
+- Android Auto: a templated app (Car App Library, IOT category) with an overview of average consumption, this month's cost, cost per kilometre, the latest fill-up and the next deadline.
+- Android Auto: costs screen (this month, last month, this year, cost per kilometre, recent fill-ups) and vehicle picker.
+- Android Auto: fill-up entry one field at a time (odometer, liters, total), checked with the same rules as the phone form.
+- Android Auto: dictated fill-up. The car's microphone feeds the phone's speech recognizer, and the sentence fills the same fields. Needs Android 13 or newer on the phone.
+- Cold-start brand video (`res/raw/splash_yaris.mp4`) in place of the animated mark; tap to skip. Reduced-motion users keep the static splash.
+
+### Changed
+
+- AGENTS rule 6 names voice entry in Android Auto as a user-started network path: the phone's speech recognizer may send the audio to Google.
+
 ## [0.10.1] - 2026-11-05
 
 ### Changed
