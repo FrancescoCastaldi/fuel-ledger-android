@@ -6,6 +6,17 @@ The format follows [Keep a Changelog 1.1.0](https://keepachangelog.com/en/1.1.0/
 
 ## [Unreleased]
 
+### Changed
+
+- Decoupled `CarRepository` into pure Kotlin domain repository interfaces (`domain/repository/`) and dedicated Room implementations (`data/`), preserving backward compatibility through a composite facade.
+- Introduced a pure Kotlin UseCases layer (`domain/usecase/`) orchestrating domain calculations, validations, and repository operations with zero Android framework dependencies.
+- Refactored all 10 ViewModels to Unidirectional Data Flow (UDF/MVI) with immutable `UiState`, `UiAction` sealed interfaces, and buffered `UiEvent` channels.
+- Decoupled `AppViewModelProvider` and Android Auto (`car/`) to interact through `FuelLedgerUseCases` without direct database coupling.
+
+### Added
+
+- Unit test suites for decoupled repositories (`RoomRepositoriesTest`), domain UseCases (`FuelLedgerUseCasesTest`), and ViewModel UDF flows (`ViewModelsUdfTest`).
+
 ## [0.11.1] - 2026-11-05
 
 ### Changed

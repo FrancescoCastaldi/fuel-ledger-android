@@ -5,15 +5,16 @@ Offline Android car logbook for fill-ups, consumption, expenses and maintenance 
 ## Architecture
 
 ```text
-Compose screens -> ViewModel (StateFlow) -> CarRepository -> Room (AppDatabase)
-                                                ^
-DeadlineReminderWorker (daily WorkManager) ------+--> Local notifications, widget refresh
-FuelLedgerWidget (Glance) -------------------------+
+Compose screens -> ViewModel (UDF: UiState, UiAction, UiEvent) -> FuelLedgerUseCases -> Repositories -> Room (AppDatabase)
+                                                                       ^
+DeadlineReminderWorker (daily WorkManager) ----------------------------+--> Local notifications, widget refresh
+FuelLedgerWidget (Glance) ---------------------------------------------+
+Android Auto (CarAppService) ------------------------------------------+
 Fill-up form -> ReceiptScanner (ML Kit, on device) -> ReceiptParser
 Fill-up form -> DashboardScanDialog -> DashboardCamera (CameraX + ML Kit, on device) -> DashboardParser -> ReadingStabilizer
 ```
 
-`AppContainer` in `FuelLedgerApp` creates the database and repository. `FuelLedgerApp` also refreshes the widget whenever `currentData` changes. `AppViewModelProvider` constructs ViewModels. SharedPreferences stores the selected vehicle. `CarRepository.currentData` emits its vehicle, fill-ups, expenses and reminders.
+`AppContainer` in `FuelLedgerApp` initializes the database, Room repositories, and `FuelLedgerUseCases`. `FuelLedgerApp` also refreshes the widget whenever `currentData` changes. `AppViewModelProvider` constructs ViewModels by injecting domain UseCases. SharedPreferences stores the selected vehicle. `CarRepository` acts as a composite facade implementing all repository interfaces with backward-compatible delegation.
 
 ## Modules
 
@@ -25,7 +26,10 @@ Paths below are relative to `app/src/main/java/com/fcastaldi/fuelledger/`.
 | `MainActivity.kt` | System splash, edge-to-edge window, cold-start UI, notification permission, `ACTION_ADD_REFUEL` |
 | `data/entity/Entities.kt` | Room entities, English type enums and the 3x3 cluster grid (`DashSpot`) of each vehicle |
 | `data/Daos.kt`, `data/AppDatabase.kt` | Queries, database and date converters |
-| `data/CarRepository.kt` | Selected vehicle, flows, CRUD and transactional import |
+| `data/Room*Repository.kt` | Specialized Room repositories (Vehicle, Refuel, Expense, Deadline, Backup, Attachment) |
+| `data/CarRepository.kt` | Composite facade implementing all repository interfaces with backward-compatible delegation |
+| `domain/repository/` | Pure Kotlin repository interfaces (`VehicleRepository`, `RefuelRepository`, etc.) |
+| `domain/usecase/` | Pure Kotlin domain UseCases (`DashboardUseCases`, `RefuelUseCases`, etc.) and `FuelLedgerUseCases` container |
 | `domain/ConsumptionCalculator.kt` | Full-to-full consumption and weighted averages |
 | `domain/RangeConsumptionCalculator.kt` | Consumption estimate from the range before each refuel, with board computer calibration |
 | `domain/CostCalculator.kt` | Cost per kilometer, period totals and monthly totals |
