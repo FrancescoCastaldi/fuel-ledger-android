@@ -31,6 +31,7 @@ Paths below are relative to `app/src/main/java/com/fcastaldi/fuelledger/`.
 | `domain/repository/` | Pure Kotlin repository interfaces (`VehicleRepository`, `RefuelRepository`, etc.) |
 | `domain/usecase/` | Pure Kotlin domain UseCases (`DashboardUseCases`, `RefuelUseCases`, etc.) and `FuelLedgerUseCases` container |
 | `domain/ConsumptionCalculator.kt` | Full-to-full consumption and weighted averages |
+| `domain/FuelPredictionEngine.kt` | Fuel burn-rate calculation, estimated empty date, days remaining, and range decay curve |
 | `domain/RangeConsumptionCalculator.kt` | Consumption estimate from the range before each refuel, with board computer calibration |
 | `domain/CostCalculator.kt` | Cost per kilometer, period totals and monthly totals |
 | `domain/DeadlineEvaluator.kt` | Reminder status, renewal and urgency order |

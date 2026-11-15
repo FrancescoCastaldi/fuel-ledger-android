@@ -85,9 +85,28 @@ create table if not exists public.deadlines (
   )
 );
 
-create index if not exists refuels_vehicle_idx   on public.refuels (vehicle_uuid);
-create index if not exists expenses_vehicle_idx  on public.expenses (vehicle_uuid);
-create index if not exists deadlines_vehicle_idx on public.deadlines (vehicle_uuid);
+create table if not exists public.fuel_checkpoints (
+  uuid                uuid primary key,
+  user_id             uuid not null default auth.uid() references auth.users (id) on delete cascade,
+  vehicle_uuid        uuid,
+  refuel_id           bigint,
+  date                date,
+  odometer_km         integer,
+  range_km            integer,
+  fuel_level_percent  double precision,
+  created_at          bigint not null default (extract(epoch from now()) * 1000)::bigint,
+  updated_at          bigint not null,
+  deleted_at          bigint,
+  constraint fuel_checkpoints_complete check (
+    deleted_at is not null
+    or (vehicle_uuid is not null and date is not null and odometer_km is not null and range_km is not null)
+  )
+);
+
+create index if not exists refuels_vehicle_idx          on public.refuels (vehicle_uuid);
+create index if not exists expenses_vehicle_idx         on public.expenses (vehicle_uuid);
+create index if not exists deadlines_vehicle_idx        on public.deadlines (vehicle_uuid);
+create index if not exists fuel_checkpoints_vehicle_idx on public.fuel_checkpoints (vehicle_uuid);
 
 -- A write that is older than the stored row is dropped, so a phone that syncs late cannot undo a newer change.
 -- The owner of a row can never change.
@@ -105,18 +124,21 @@ $$;
 create trigger vehicles_keep_newest   before update on public.vehicles   for each row execute function public.fuel_ledger_keep_newest();
 create trigger refuels_keep_newest    before update on public.refuels    for each row execute function public.fuel_ledger_keep_newest();
 create trigger expenses_keep_newest   before update on public.expenses   for each row execute function public.fuel_ledger_keep_newest();
-create trigger deadlines_keep_newest  before update on public.deadlines  for each row execute function public.fuel_ledger_keep_newest();
+create trigger deadlines_keep_newest        before update on public.deadlines        for each row execute function public.fuel_ledger_keep_newest();
+create trigger fuel_checkpoints_keep_newest before update on public.fuel_checkpoints for each row execute function public.fuel_ledger_keep_newest();
 
 -- Each signed-in user sees and changes only their own rows. The anon key alone gives access to nothing.
-alter table public.vehicles  enable row level security;
-alter table public.refuels   enable row level security;
-alter table public.expenses  enable row level security;
-alter table public.deadlines enable row level security;
+alter table public.vehicles         enable row level security;
+alter table public.refuels          enable row level security;
+alter table public.expenses         enable row level security;
+alter table public.deadlines        enable row level security;
+alter table public.fuel_checkpoints enable row level security;
 
-create policy "own rows" on public.vehicles  for all to authenticated using (user_id = auth.uid()) with check (user_id = auth.uid());
-create policy "own rows" on public.refuels   for all to authenticated using (user_id = auth.uid()) with check (user_id = auth.uid());
-create policy "own rows" on public.expenses  for all to authenticated using (user_id = auth.uid()) with check (user_id = auth.uid());
-create policy "own rows" on public.deadlines for all to authenticated using (user_id = auth.uid()) with check (user_id = auth.uid());
+create policy "own rows" on public.vehicles         for all to authenticated using (user_id = auth.uid()) with check (user_id = auth.uid());
+create policy "own rows" on public.refuels          for all to authenticated using (user_id = auth.uid()) with check (user_id = auth.uid());
+create policy "own rows" on public.expenses         for all to authenticated using (user_id = auth.uid()) with check (user_id = auth.uid());
+create policy "own rows" on public.deadlines        for all to authenticated using (user_id = auth.uid()) with check (user_id = auth.uid());
+create policy "own rows" on public.fuel_checkpoints for all to authenticated using (user_id = auth.uid()) with check (user_id = auth.uid());
 
 -- Upgrading for receipt attachments: run these lines in the SQL editor:
 alter table public.refuels add column if not exists receipt_path text;

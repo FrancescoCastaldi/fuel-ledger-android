@@ -6,6 +6,8 @@ The format follows [Keep a Changelog 1.1.0](https://keepachangelog.com/en/1.1.0/
 
 ## [Unreleased]
 
+## [0.12.0] - 2026-11-15
+
 ### Changed
 
 - Decoupled `CarRepository` into pure Kotlin domain repository interfaces (`domain/repository/`) and dedicated Room implementations (`data/`), preserving backward compatibility through a composite facade.
@@ -15,7 +17,12 @@ The format follows [Keep a Changelog 1.1.0](https://keepachangelog.com/en/1.1.0/
 
 ### Added
 
-- Unit test suites for decoupled repositories (`RoomRepositoriesTest`), domain UseCases (`FuelLedgerUseCasesTest`), and ViewModel UDF flows (`ViewModelsUdfTest`).
+- Fuel prediction and range telemetry engine (`FuelPredictionEngine`): computes daily burn rate (km/day and liters/day), estimated empty date, days of fuel remaining, reserve alerts, and range decay curve analysis.
+- Mid-tank telemetry checkpoints: `FuelCheckpoint` Room entity, `FuelCheckpointDao`, and deterministic Room migration version 6 (`6.json`).
+- Quick checkpoint logging dialog (`AddCheckpointDialog`) and prediction card (`FuelPredictionCard`) on Dashboard with decay sparkline and 1-tap logging.
+- Fuel runout days estimation displayed on Android Auto overview and Glance wide widget.
+- Full CSV codec (type 'C' records) and Supabase cloud sync support (`fuel_checkpoints` table with RLS) for telemetry checkpoints.
+- Unit test suites for decoupled repositories (`RoomRepositoriesTest`), domain UseCases (`FuelLedgerUseCasesTest`), ViewModel UDF flows (`ViewModelsUdfTest`), `FuelPredictionEngineTest`, and Room migration 5 to 6.
 
 ## [0.11.1] - 2026-11-05
 
