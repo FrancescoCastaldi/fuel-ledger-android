@@ -11,6 +11,7 @@
 7. Never commit signing keys, passwords, `local.properties`, database files or APKs. Release APKs live in `dist/` and only the latest versioned one is kept: `build_apk.bat` deletes older builds from `dist/` after a successful build. Never leave APKs in the repository root.
 8. Never overwrite unrelated user changes. Follow the parent workspace instructions when available.
 9. One branch only: `main`. Do not keep feature branches, locally or on GitHub. Work lands on `main`; for a change that needs review, open a pull request from a short-lived branch and delete it as soon as it is merged. Release tags point to commits that are on `main`.
+10. Every version that is pushed gets a GitHub release with its APK attached (`vX.Y.Z` tag, one `FuelLedger-vX.Y.Z.apk`, notes from `docs/releases/vX.Y.Z.md`), created at the same time as the push. The in-app update (`update/GitHubReleases.kt`) reads only the latest GitHub release: without it the app says there are no updates. Follow "Publishing a release" in `docs/install.md`; the tag must match `versionName`.
 
 ## Toolchain
 
