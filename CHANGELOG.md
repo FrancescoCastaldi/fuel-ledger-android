@@ -6,6 +6,20 @@ The format follows [Keep a Changelog 1.1.0](https://keepachangelog.com/en/1.1.0/
 
 ## [Unreleased]
 
+## [0.13.0] - 2026-11-18
+
+### Added
+
+- Km per day: on the Dashboard for the last 30 days, and in Statistics for the chosen period, from fill-ups and checkpoints.
+- Salary cycles: spending runs from the 10th to the 9th of the next month, shown on the Dashboard and in Statistics.
+- Statistics period filter: current cycle, 3, 6 or 12 cycles, all time, or a custom range.
+- Statistics charts for spending per salary cycle, km per day and price per liter, all following the period filter.
+
+### Fixed
+
+- Cloud sync stopped at fuel checkpoints because the cloud table lacked the deleted flag. Run the new line in `docs/supabase/schema.sql` once.
+- A cloud write that the server refuses now shows the reason from the server in the sync message.
+
 ## [0.12.0] - 2026-11-15
 
 ### Changed

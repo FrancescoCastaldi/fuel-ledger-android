@@ -33,7 +33,9 @@ Paths below are relative to `app/src/main/java/com/fcastaldi/fuelledger/`.
 | `domain/ConsumptionCalculator.kt` | Full-to-full consumption and weighted averages |
 | `domain/FuelPredictionEngine.kt` | Fuel burn-rate calculation, estimated empty date, days remaining, and range decay curve |
 | `domain/RangeConsumptionCalculator.kt` | Consumption estimate from the range before each refuel, with board computer calibration |
-| `domain/CostCalculator.kt` | Cost per kilometer, period totals and monthly totals |
+| `domain/CostCalculator.kt` | Cost per kilometer, period totals, monthly and salary-cycle totals |
+| `domain/PayCycle.kt` | Salary cycle from the 10th to the 9th of the next month |
+| `domain/DistanceCalculator.kt` | Km per day from odometer readings of fill-ups and checkpoints |
 | `domain/DeadlineEvaluator.kt` | Reminder status, renewal and urgency order |
 | `domain/RefuelMath.kt` | Missing fill-up value and odometer validation |
 | `domain/CsvCodec.kt` | Single-file CSV with V, R, E and D record types |
@@ -85,6 +87,8 @@ Under `app/src/test/java/com/fcastaldi/fuelledger/`:
 - `ui/FmtTest.kt`: English and Italian formatting and reminder phrases.
 - `ui/StringResourcesTest.kt`, `ui/ItalianLocalizationTest.kt`: parity of `values/` and `values-it/`, and Italian text under Robolectric.
 - `sync/SyncEngineTest.kt`, `sync/CloudCodecTest.kt`, `sync/AuthTest.kt`: sync between two phones and a fake cloud, record conversion, proof key and session parsing.
+- `sync/CloudSchemaContractTest.kt`: every column the app sends exists in `docs/supabase/schema.sql`.
+- `domain/PayCycleTest.kt`, `domain/DistanceCalculatorTest.kt`, `domain/CostCalculatorCycleTest.kt`: salary cycle boundaries, km per day and cycle totals.
 - `update/UpdateTest.kt`: version comparison, release JSON parsing and the check states.
 - `update/UpdateServiceTest.kt`, `update/ApkDownloaderTest.kt`, `update/UpdateDecisionTest.kt`: the download, verification and install flow with fakes.
 - `ui/MotionTest.kt`, `ui/SwipeToDeleteTest.kt`: stagger timing and swipe-to-delete.

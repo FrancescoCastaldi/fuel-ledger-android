@@ -97,6 +97,7 @@ create table if not exists public.fuel_checkpoints (
   created_at          bigint not null default (extract(epoch from now()) * 1000)::bigint,
   updated_at          bigint not null,
   deleted_at          bigint,
+  is_deleted          boolean not null default false,
   constraint fuel_checkpoints_complete check (
     deleted_at is not null
     or (vehicle_uuid is not null and date is not null and odometer_km is not null and range_km is not null)
@@ -143,6 +144,10 @@ create policy "own rows" on public.fuel_checkpoints for all to authenticated usi
 -- Upgrading for receipt attachments: run these lines in the SQL editor:
 alter table public.refuels add column if not exists receipt_path text;
 alter table public.expenses add column if not exists receipt_path text;
+
+-- Upgrading to 0.12 (fuel checkpoints): run these two lines once if fuel_checkpoints was created before this column existed.
+alter table public.fuel_checkpoints add column if not exists is_deleted boolean not null default false;
+notify pgrst, 'reload schema';
 
 -- Storage bucket for receipt and invoice attachments:
 insert into storage.buckets (id, name, public)

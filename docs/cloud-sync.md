@@ -5,7 +5,7 @@ Fuel Ledger works fully offline. Optionally it can sync with a Supabase project 
 ## Set it up
 
 1. **Create the project.** In Supabase, create a project (an EU region is a sensible choice). The free plan is enough for a logbook; Pro adds daily backups and keeps the project from pausing after a week without activity.
-2. **Create the tables.** Open **SQL Editor**, paste the contents of [`supabase/schema.sql`](supabase/schema.sql) and run it. It creates four tables with row level security, so each signed-in user sees only their own rows.
+2. **Create the tables.** Open **SQL Editor**, paste the contents of [`supabase/schema.sql`](supabase/schema.sql) and run it. It creates five tables with row level security, so each signed-in user sees only their own rows.
 3. **Create a Google sign-in.** In Google Cloud Console, create a project, configure the OAuth consent screen (External, add your own Google account as a test user), then **Credentials > Create credentials > OAuth client ID > Web application**. Under *Authorized redirect URIs* add `https://<your-project-ref>.supabase.co/auth/v1/callback`. Copy the client ID and secret.
 4. **Enable Google in Supabase.** **Authentication > Sign In / Providers > Google**: enable it and paste the client ID and secret.
 5. **Allow the app's return link.** **Authentication > URL Configuration > Redirect URLs**: add `com.fcastaldi.fuelledger://auth-callback`.
@@ -35,6 +35,10 @@ Fuel Ledger works fully offline. Optionally it can sync with a Supabase project 
 ## Updating from 0.6
 
 Version 0.7 adds two columns to `vehicles`: where the odometer and the range sit on the dashboard. Before installing 0.7 on a phone that syncs, run the two `alter table` lines at the top of [supabase/schema.sql](supabase/schema.sql) in the SQL editor of your project. Without them the upload is refused, and the sync reports it. Rows that 0.6 phones wrote stay valid, because the columns are nullable.
+
+## Updating to 0.12
+
+Version 0.12 stores a deleted flag for fuel checkpoints, so the cloud table needs one more column. Run the `alter table public.fuel_checkpoints` line in the "Upgrading to 0.12" section of [supabase/schema.sql](supabase/schema.sql) in the SQL editor of your project. Without it the sync stops at the checkpoints and reports `Could not write fuel_checkpoints (HTTP 400)`.
 
 ## Privacy
 
