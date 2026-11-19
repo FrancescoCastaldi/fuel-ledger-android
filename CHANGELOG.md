@@ -6,6 +6,19 @@ The format follows [Keep a Changelog 1.1.0](https://keepachangelog.com/en/1.1.0/
 
 ## [Unreleased]
 
+## [0.14.0] - 2026-11-19
+
+### Added
+
+- Press feedback: list rows scale slightly while pressed.
+- Shared transitions: a refuel, expense or deadline row morphs into its edit form.
+
+### Changed
+
+- Refreshed palette: the amber accent is warmer and richer, backgrounds and surfaces are deeper in night mode and cleaner in day mode, and warning now reads differently from the accent. All text and status colors meet WCAG contrast targets, checked by a unit test.
+- Motion uses one set of timing tokens and springs in `ui/Motion.kt`: tab switches fade through, forms slide along one axis, the gauge needle settles with a small overshoot, and chart bars and the splash follow the same easing.
+- Compose BOM 2024.09.00 and navigation-compose 2.8.0, needed for shared element transitions.
+
 ## [0.13.0] - 2026-11-18
 
 ### Added
@@ -225,7 +238,8 @@ The format follows [Keep a Changelog 1.1.0](https://keepachangelog.com/en/1.1.0/
 
 Version 0.1.0 was a local prototype and was not published.
 
-[Unreleased]: https://github.com/FrancescoCastaldi/fuel-ledger-android/compare/v0.6.0...HEAD
+[Unreleased]: https://github.com/FrancescoCastaldi/fuel-ledger-android/compare/v0.14.0...HEAD
+[0.14.0]: https://github.com/FrancescoCastaldi/fuel-ledger-android/compare/v0.13.0...v0.14.0
 [0.6.0]: https://github.com/FrancescoCastaldi/fuel-ledger-android/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/FrancescoCastaldi/fuel-ledger-android/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/FrancescoCastaldi/fuel-ledger-android/compare/v0.3.0...v0.4.0

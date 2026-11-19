@@ -67,7 +67,8 @@ Paths below are relative to `app/src/main/java/com/fcastaldi/fuelledger/`.
 | `update/UpdateDecision.kt`, `update/ApkInspector.kt` | Compares the candidate APK with the installed app (package, version code, signer); reads both through `PackageManager` |
 | `update/SelfInstaller.kt`, `update/InstallResultReceiver.kt` | Installs through a `PackageInstaller` session and receives its outcome |
 | `ui/settings/UpdateViewModel.kt` | State of the update row in Settings |
-| `ui/Motion.kt` | Shared easing and timing, staggered entrance, count-up and the entrance window of lists |
+| `ui/Motion.kt` | Motion tokens (durations, easings, `snappy`/`bouncy`/`gentle` springs), staggered entrance, `pressScale`, count-up and the entrance window of lists |
+| `ui/components/SharedEntry.kt` | Shared element scopes provided by the navigation host and `Modifier.sharedEntry(key)` that morphs a list row into its edit form |
 | `ui/theme/` | Day/night colors, Barlow typography and shapes |
 | `ui/components/` | Gauge, rolling odometer, charts, forms, swipe rows and the cluster spot picker (`SpotPicker.kt`) |
 | `ui/components/FuelLedgerSplash.kt` | Vector mark and animated cold-start needle |
